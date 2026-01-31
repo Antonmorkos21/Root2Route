@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/Screen/auth/forgot_password.dart';
-import 'package:root2route/Screen/auth/register.dart';
-import 'package:root2route/widgets/auth_header.dart';
-import 'package:root2route/widgets/custom_button.dart';
-import 'package:root2route/widgets/custom_text_field.dart';
+import 'package:root2route/screens/auth/forgot_password.dart';
+import 'package:root2route/screens/auth/register.dart';
+import 'package:root2route/components/auth_header.dart';
+import 'package:root2route/components/custom_button.dart';
+import 'package:root2route/components/custom_text_field.dart';
 
 class Login extends StatefulWidget {
   static const String routeName = '/login';

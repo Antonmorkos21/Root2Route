@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:root2route/Screen/auth/login.dart';
-import 'package:root2route/widgets/account_type_button.dart';
-import 'package:root2route/widgets/auth_header.dart';
-import 'package:root2route/widgets/custom_button.dart';
-import 'package:root2route/widgets/custom_text_field.dart';
+import 'package:root2route/screens/auth/login.dart';
+import 'package:root2route/components/account_type_button.dart';
+import 'package:root2route/components/auth_header.dart';
+import 'package:root2route/components/custom_button.dart';
+import 'package:root2route/components/custom_text_field.dart';
 
 class Register extends StatefulWidget {
   static const String routeName = '/register';
