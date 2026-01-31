@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/Screen/auth/forgot_password.dart';
-import 'package:root2route/Screen/auth/login.dart';
-import 'package:root2route/Screen/auth/otp.dart';
-import 'package:root2route/Screen/auth/re-enter_password.dart';
-import 'package:root2route/Screen/auth/register.dart';
+import 'package:root2route/screens/auth/forgot_password.dart';
+import 'package:root2route/screens/auth/login.dart';
+import 'package:root2route/screens/auth/otp.dart';
+import 'package:root2route/screens/auth/re-enter_password.dart';
+import 'package:root2route/screens/auth/register.dart';
 
 void main() {
   runApp(const MyApp());
