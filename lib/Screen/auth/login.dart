@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/Screen/auth/forgot_password.dart';
-import 'package:root2route/Screen/auth/register.dart';
+import 'package:root2route/Screen/auth/register_screen.dart';
 import 'package:root2route/widgets/auth_header.dart';
 import 'package:root2route/widgets/custom_button.dart';
 import 'package:root2route/widgets/custom_text_field.dart';

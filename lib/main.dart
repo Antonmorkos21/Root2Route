@@ -3,7 +3,7 @@ import 'package:root2route/Screen/auth/forgot_password.dart';
 import 'package:root2route/Screen/auth/login.dart';
 import 'package:root2route/Screen/auth/otp.dart';
 import 'package:root2route/Screen/auth/re-enter_password.dart';
-import 'package:root2route/Screen/auth/register.dart';
+import 'package:root2route/Screen/auth/register_screen.dart';
 
 void main() {
   runApp(const MyApp());
