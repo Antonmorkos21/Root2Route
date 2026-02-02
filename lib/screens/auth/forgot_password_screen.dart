@@ -2,25 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:root2route/components/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_field.dart';
-import 'package:root2route/screens/auth/otp.dart';
+import 'package:root2route/screens/auth/verification_screen.dart';
 
-
-class ForgotPassword extends StatefulWidget {
-  static const String routeName = '/forgot';
-  const ForgotPassword({super.key});
+class ForgotPasswordScreen extends StatefulWidget {
+  static const String id = '/ForgotPasswordScreen';
+  const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPassword> createState() => _ForgotPasswordState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final emailController = TextEditingController();
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +43,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 CustomButton(
                   text: 'Send Reset Link',
                   onPressed: () {
-                    Navigator.pushNamed(context, Otp.routeName);
+                    Navigator.pushNamed(context, VerificationScreen.id);
                   },
                 ),
               ],

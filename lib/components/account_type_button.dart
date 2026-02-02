@@ -64,4 +64,4 @@ class AccountTile extends StatelessWidget {
   }
 }
 
-enum AccountType { farmer, merchant, factory }
+enum AccountType { farmer, merchant, factory, defult }

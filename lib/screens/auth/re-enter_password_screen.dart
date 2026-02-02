@@ -3,24 +3,19 @@ import 'package:root2route/components/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_field.dart';
 
-class ReEnterPassword extends StatefulWidget {
-  static const String routeName = '/re-enter-password';
-  const ReEnterPassword({super.key});
+class ReEnterPasswordScreen extends StatefulWidget {
+  static const String id = '/re-enter-passwordScreen';
+  const ReEnterPasswordScreen({super.key});
 
   @override
-  State<ReEnterPassword> createState() => _ReEnterPasswordState();
+  State<ReEnterPasswordScreen> createState() => _ReEnterPasswordScreenState();
 }
 
-class _ReEnterPasswordState extends State<ReEnterPassword> {
+class _ReEnterPasswordScreenState extends State<ReEnterPasswordScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  @override
-  void dispose() {
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    super.dispose();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
