@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/screens/auth/forgot_password.dart';
-import 'package:root2route/screens/auth/register.dart';
+import 'package:root2route/screens/auth/forgot_password_screen.dart';
+import 'package:root2route/screens/auth/register_screen.dart';
 import 'package:root2route/components/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_field.dart';
 
-class Login extends StatefulWidget {
-  static const String routeName = '/login';
-  const Login({super.key});
+class LoginScreen extends StatefulWidget {
+  static const String id = '/loginScreen';
+  const LoginScreen({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +59,7 @@ class _LoginState extends State<Login> {
                     onPressed:
                         () => Navigator.pushNamed(
                           context,
-                          ForgotPassword.routeName,
+                          ForgotPasswordScreen.id,
                         ),
                     style: TextButton.styleFrom(
                       foregroundColor: const Color(0xFF2ECC71),
@@ -94,7 +87,7 @@ class _LoginState extends State<Login> {
                       onPressed:
                           () => Navigator.pushNamed(
                             context,
-                            Register.routeName,
+                            RegisterScreen.id,
                           ),
                       style: TextButton.styleFrom(
                         foregroundColor: const Color(0xFF2ECC71),

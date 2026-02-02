@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/screens/auth/forgot_password.dart';
-import 'package:root2route/screens/auth/login.dart';
-import 'package:root2route/screens/auth/otp.dart';
-import 'package:root2route/screens/auth/re-enter_password.dart';
-import 'package:root2route/screens/auth/register.dart';
+import 'package:flutter/services.dart';
+import 'package:root2route/screens/auth/forgot_password_screen.dart';
+import 'package:root2route/screens/auth/login_screen.dart';
+import 'package:root2route/screens/auth/verification_screen.dart';
+import 'package:root2route/screens/auth/re-enter_password_screen.dart';
+import 'package:root2route/screens/auth/register_screen.dart';
 
 void main() {
+  // set status bar to transparent
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
+
   runApp(const MyApp());
 }
 
@@ -17,13 +26,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: false),
-      initialRoute: Login.routeName,
+      initialRoute: LoginScreen.id,
       routes: {
-        Login.routeName: (_) => const Login(),
-        Register.routeName: (_) => const Register(),
-        ForgotPassword.routeName: (_) => const ForgotPassword(),
-        Otp.routeName: (_) => const Otp(),
-        ReEnterPassword.routeName: (_) => const ReEnterPassword(),
+        LoginScreen.id: (_) => const LoginScreen(),
+        RegisterScreen.id: (_) => const RegisterScreen(),
+        ForgotPasswordScreen.id: (_) => const ForgotPasswordScreen(),
+        VerificationScreen.id: (_) => const VerificationScreen(),
+        ReEnterPasswordScreen.id: (_) => const ReEnterPasswordScreen(),
       },
     );
   }

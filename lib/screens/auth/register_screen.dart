@@ -1,35 +1,24 @@
-
 import 'package:flutter/material.dart';
-import 'package:root2route/screens/auth/login.dart';
 import 'package:root2route/components/account_type_button.dart';
 import 'package:root2route/components/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_field.dart';
 
-class Register extends StatefulWidget {
-  static const String routeName = '/register';
-  const Register({super.key});
+class RegisterScreen extends StatefulWidget {
+  static const String id = '/registerScreen';
+  const RegisterScreen({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterState extends State<Register> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  AccountType selectedType = AccountType.farmer;
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    nameController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    super.dispose();
-  }
+  AccountType selectedType = AccountType.defult;
 
   @override
   Widget build(BuildContext context) {
@@ -134,12 +123,7 @@ class _RegisterState extends State<Register> {
 
                 const SizedBox(height: 25),
 
-                CustomButton(
-                  text: 'Register',
-                  onPressed: () {
-                    // TODO: register logic
-                  },
-                ),
+                CustomButton(text: 'Register', onPressed: () {}),
 
                 const SizedBox(height: 14),
 
@@ -148,11 +132,7 @@ class _RegisterState extends State<Register> {
                   children: [
                     const Text('Already have an account?'),
                     TextButton(
-                      onPressed:
-                          () => Navigator.pushNamed(
-                            context,
-                            Login.routeName,
-                          ),
+                      onPressed: () => Navigator.pop(context),
                       style: TextButton.styleFrom(
                         foregroundColor: const Color(0xFF2ECC71),
                       ),
