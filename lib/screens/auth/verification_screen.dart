@@ -10,10 +10,10 @@ class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
 
   @override
-  State<VerificationScreen> createState() => _OtpScreenState();
+  State<VerificationScreen> createState() => _VerificationScreenState();
 }
 
-class _OtpScreenState extends State<VerificationScreen> {
+class _VerificationScreenState extends State<VerificationScreen> {
   static const Color green = Color(0xFF2ECC71);
 
   Timer? _timer;
