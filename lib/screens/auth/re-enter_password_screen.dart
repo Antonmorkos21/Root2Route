@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/components/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
-import 'package:root2route/components/custom_text_field.dart';
+import 'package:root2route/components/custom_text_form_field.dart';
 
 class ReEnterPasswordScreen extends StatefulWidget {
   static const String id = '/re-enter-passwordScreen';
@@ -14,8 +14,7 @@ class ReEnterPasswordScreen extends StatefulWidget {
 class _ReEnterPasswordScreenState extends State<ReEnterPasswordScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-
- 
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,42 +24,72 @@ class _ReEnterPasswordScreenState extends State<ReEnterPasswordScreen> {
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  AuthHeader(
-                    title: 'Create New Password',
-                    description:
-                        'Your new password must be different from previously used passwords.',
-                    icon: Icons.password_rounded,
-                  ),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    AuthHeader(
+                      title: 'Create New Password',
+                      description:
+                          'Your new password must be different from previously used passwords.',
+                      icon: Icons.password_rounded,
+                    ),
 
-                  const SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
-                  CustomTextField(
-                    icon: Icons.lock_outline,
-                    label: 'New Password',
-                    controller: passwordController,
-                    isPassword: true,
-                  ),
+                    CustomTextFormField(
+                      icon: Icons.lock_outline,
+                      label: 'New Password',
+                      controller: passwordController,
+                      isPassword: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter your password";
+                        }
 
-                  const SizedBox(height: 25),
+                        if (value.length < 6) {
+                          return 'The password must be at least 6 characters long';
+                        }
 
-                  CustomTextField(
-                    icon: Icons.lock_outline,
-                    label: 'Confirm Password',
-                    controller: confirmPasswordController,
-                    isPassword: true,
-                  ),
+                        return null;
+                      },
+                    ),
 
-                  const SizedBox(height: 30),
+                    const SizedBox(height: 25),
 
-                  CustomButton(
-                    text: "Reset Password",
-                    onPressed: () {
-                      // TODO: validate + reset logic
-                    },
-                  ),
-                ],
+                    CustomTextFormField(
+                      icon: Icons.lock_outline,
+                      label: 'Confirm Password',
+                      controller: confirmPasswordController,
+                      isPassword: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter your password";
+                        }
+
+                        if (value.length < 6) {
+                          return 'The password must be at least 6 characters long';
+                        }
+                        if (passwordController.value !=
+                            confirmPasswordController.value) {
+                          return 'Passwords do not match';
+                        }
+
+                        return null;
+                      },
+                    ),
+
+                    const SizedBox(height: 30),
+
+                    CustomButton(
+                      text: "Reset Password",
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {}
+                        ;
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

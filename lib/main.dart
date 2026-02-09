@@ -5,9 +5,9 @@ import 'package:root2route/screens/auth/login_screen.dart';
 import 'package:root2route/screens/auth/verification_screen.dart';
 import 'package:root2route/screens/auth/re-enter_password_screen.dart';
 import 'package:root2route/screens/auth/register_screen.dart';
+import 'package:root2route/screens/farmer/farmer_home_screen.dart';
 
 void main() {
-  // set status bar to transparent
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -37,3 +37,12 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreen());
+//   }
+// }

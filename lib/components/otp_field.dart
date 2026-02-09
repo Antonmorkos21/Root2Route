@@ -7,7 +7,6 @@ class OtpField extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpField> {
-  // 1. استخدام القوائم لتبسيط التعريفات
   final int length = 4;
   late List<TextEditingController> controllers;
   late List<FocusNode> focusNodes;
@@ -15,7 +14,6 @@ class _OtpScreenState extends State<OtpField> {
   @override
   void initState() {
     super.initState();
-    // إنشاء العناصر ديناميكياً
     controllers = List.generate(length, (index) => TextEditingController());
     focusNodes = List.generate(length, (index) => FocusNode());
   }
@@ -32,7 +30,6 @@ class _OtpScreenState extends State<OtpField> {
     super.dispose();
   }
 
-  // تجميع الـ OTP بسهولة
   String get otp => controllers.map((c) => c.text).join();
 
   @override
@@ -43,7 +40,6 @@ class _OtpScreenState extends State<OtpField> {
     );
   }
 
-  // دالة واحدة موحدة لكل الخانات
   Widget _buildOtpBox(int index) {
     return SizedBox(
       width: 60,
@@ -58,7 +54,6 @@ class _OtpScreenState extends State<OtpField> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
         onChanged: (value) {
-          // آلية الحركة: إذا كتب رقم انتقل للأمام، إذا مسح عد للخلف
           if (value.isNotEmpty && index < length - 1) {
             focusNodes[index + 1].requestFocus();
           } else if (value.isEmpty && index > 0) {
