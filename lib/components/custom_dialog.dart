@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'custom_button.dart'; // عدّل المسار حسب مشروعك
-
+import 'custom_button.dart'; 
 class CustomDialog extends StatelessWidget {
   final String title;
   final String message;
