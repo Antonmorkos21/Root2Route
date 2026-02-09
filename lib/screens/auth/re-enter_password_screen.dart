@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/components/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
+import 'package:root2route/components/custom_dialog.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
+import 'package:root2route/screens/auth/login_screen.dart';
 
 class ReEnterPasswordScreen extends StatefulWidget {
   static const String id = '/re-enter-passwordScreen';
@@ -84,8 +86,26 @@ class _ReEnterPasswordScreenState extends State<ReEnterPasswordScreen> {
                     CustomButton(
                       text: "Reset Password",
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {}
-                        ;
+                        if (!formKey.currentState!.validate()) return;
+                        if (formKey.currentState!.validate()) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder:
+                                (_) => CustomDialog(
+                                  type: DialogType.success,
+                                  title: "Success",
+                                  message:
+                                      "Your password has been reset successfully. \n You can now log in with your new password",
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      LoginScreen.id,
+                                    );
+                                  },
+                                ),
+                          );
+                        }
                       },
                     ),
                   ],

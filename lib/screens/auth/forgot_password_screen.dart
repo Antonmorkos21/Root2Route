@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/components/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
+import 'package:root2route/components/custom_dialog.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/screens/auth/verification_screen.dart';
 
@@ -59,10 +60,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   CustomButton(
                     text: 'Send Reset Link',
                     onPressed: () {
-                      Navigator.pushNamed(context, VerificationScreen.id);
-
                       if (formKey.currentState!.validate()) {
-                        print('Login Success');
+                        showDialog(
+                          context: context,
+                          builder:
+                              (_) => CustomDialog(
+                                type: DialogType.success,
+                                title: "Verification Code",
+                                onPressed: () {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    VerificationScreen.id,
+                                  );
+                                },
+                                message:
+                                    "We have sent a 4-digit verification code to your registered email address.",
+                              ),
+                        );
                       }
                     },
                   ),

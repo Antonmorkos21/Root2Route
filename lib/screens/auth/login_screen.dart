@@ -106,30 +106,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (formKey.currentState!.validate()) {
                         showDialog(
                           context: context,
-                          barrierDismissible: true,
+                          barrierDismissible: false,
                           builder:
                               (_) => CustomDialog(
-                                title: 'Welcome!',
-                                message: 'Logged in successfully 🎉',
-                                icon: Icons.check_circle_rounded,
-                                color: AppColors.primary,
-                                buttonText: 'Continue',
-
-                                // onPressed: () {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => FarmerHomeScreen(),
-                                //     ),
-                                //   );
-                                // },
+                                type: DialogType.success,
+                                title: "Success",
+                                message: "Login successful. Welcome back!",
                                 onPressed: () {
-                                  Navigator.pushReplacement(
+                                  Navigator.pushReplacementNamed(
                                     context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => const FarmerHomeScreen(),
-                                    ),
+                                    FarmerHomeScreen.id,
                                   );
                                 },
                               ),

@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         ForgotPasswordScreen.id: (_) => const ForgotPasswordScreen(),
         VerificationScreen.id: (_) => const VerificationScreen(),
         ReEnterPasswordScreen.id: (_) => const ReEnterPasswordScreen(),
+        FarmerHomeScreen.id: (_) => const FarmerHomeScreen(),
       },
     );
   }

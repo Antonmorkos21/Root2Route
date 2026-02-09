@@ -8,6 +8,8 @@ import 'package:root2route/screens/farmer/scan_screen.dart';
 import 'package:root2route/screens/farmer/notifications_screen.dart';
 
 class FarmerHomeScreen extends StatefulWidget {
+  static const String id = '/farmerHome';
+
   const FarmerHomeScreen({super.key});
 
   @override

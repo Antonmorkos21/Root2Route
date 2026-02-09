@@ -181,36 +181,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () {
                       if (!formKey.currentState!.validate()) return;
                       if (selectedType == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Please select an account type'),
-                            backgroundColor: Colors.red,
-                            behavior: SnackBarBehavior.floating,
-                            margin: EdgeInsets.all(10),
-                            duration: Duration(seconds: 2),
-                          ),
+                        showDialog(
+                          context: context,
+                          builder:
+                              (_) => const CustomDialog(
+                                type: DialogType.error,
+                                title: "account type",
+                                message: "Please select an account type",
+                              ),
                         );
                         return;
                       }
-
                       showDialog(
                         context: context,
-                        barrierDismissible: true,
                         builder:
                             (_) => CustomDialog(
-                              title: 'Done!',
-                              message: 'Account created successfully 🎉',
-                              icon: Icons.check_circle_rounded,
-                              color: AppColors.primary,
-                              buttonText: 'OK',
+                              type: DialogType.success,
+                              title: "Success",
                               onPressed: () {
-                                Navigator.push(
+                                Navigator.pushReplacementNamed(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
-                                  ),
+                                  LoginScreen.id,
                                 );
                               },
+                              message:
+                                  "Account created successfully. Please log in to continue.",
                             ),
                       );
                     },
