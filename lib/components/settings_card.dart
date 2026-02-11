@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:root2route/core/responsive/app_sizes.dart';
+import 'package:root2route/core/theme/app_colors.dart';
+
+class SettingsCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String? value;
+  final IconData iconButton;
+
+  const SettingsCard({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.value,
+    required this.iconButton,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColors.primary, size: 24),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(fontSize: 17, color: AppColors.iconSecondary),
+              ),
+            ),
+            Text(
+              value ?? '',
+              style: TextStyle(fontSize: 17, color: AppColors.textPrimary),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(iconButton, color: AppColors.primary),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
