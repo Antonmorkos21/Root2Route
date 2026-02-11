@@ -61,7 +61,6 @@ class _OtpScreenState extends State<OtpField> {
           }
 
           if (otp.length == length) {
-            print("الرمز المكتمل هو: $otp");
           }
         },
       ),
