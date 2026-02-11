@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 
 class SettingsCard extends StatelessWidget {
@@ -7,6 +6,7 @@ class SettingsCard extends StatelessWidget {
   final String title;
   final String? value;
   final IconData iconButton;
+  final VoidCallback onPressed;
 
   const SettingsCard({
     super.key,
@@ -14,6 +14,7 @@ class SettingsCard extends StatelessWidget {
     required this.title,
     this.value,
     required this.iconButton,
+    required this.onPressed,
   });
 
   @override
@@ -32,7 +33,9 @@ class SettingsCard extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+       // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+        padding:  EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+
         child: Row(
           children: [
             Icon(icon, color: AppColors.primary, size: 24),
@@ -48,7 +51,7 @@ class SettingsCard extends StatelessWidget {
               style: TextStyle(fontSize: 17, color: AppColors.textPrimary),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: onPressed,
               icon: Icon(iconButton, color: AppColors.primary),
             ),
           ],

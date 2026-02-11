@@ -86,7 +86,7 @@ class _ScanScreenState extends State<ScanScreen> {
                   color: AppColors.iconPrimary,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.2),
+                    color:  Color.fromARGB(255, 0, 0, 0).withOpacity(0.2),
                   ),
                   boxShadow: [
                     BoxShadow(

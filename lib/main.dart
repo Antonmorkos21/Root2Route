@@ -5,7 +5,6 @@ import 'package:root2route/screens/auth/login_screen.dart';
 import 'package:root2route/screens/auth/verification_screen.dart';
 import 'package:root2route/screens/auth/re-enter_password_screen.dart';
 import 'package:root2route/screens/auth/register_screen.dart';
-import 'package:root2route/screens/farmer/farmer_home_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -43,6 +42,9 @@ class MyApp extends StatelessWidget {
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreen());
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: FarmerHomeScreen(),
+//     );
 //   }
 // }

@@ -85,7 +85,7 @@ class _ReEnterPasswordScreenState extends State<ReEnterPasswordScreen> {
                       text: "Reset Password",
                       onPressed: () {
                         if (formKey.currentState!.validate()) {}
-                        ;
+                        
                       },
                     ),
                   ],

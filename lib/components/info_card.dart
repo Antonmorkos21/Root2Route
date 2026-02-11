@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 
 class InfoCard extends StatelessWidget {

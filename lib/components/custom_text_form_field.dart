@@ -3,11 +3,13 @@ import 'package:root2route/core/theme/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final IconData icon;
+
   final String label;
   final TextEditingController controller;
   final bool isPassword;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
+  final bool? isReadOnly;
 
   const CustomTextFormField({
     super.key,
@@ -17,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
     this.isPassword = false,
     this.keyboardType,
     this.validator,
+    this.isReadOnly = false,
   });
 
   @override
@@ -24,6 +27,9 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       obscureText: isPassword,
+
+      readOnly: isReadOnly ?? true,
+
       keyboardType: keyboardType,
       validator: validator,
       decoration: InputDecoration(

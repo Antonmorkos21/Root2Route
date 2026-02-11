@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
-import 'package:root2route/screens/farmer/account_screen.dart';
+import 'package:root2route/screens/account_screen.dart';
 import 'package:root2route/screens/farmer/crops_screen.dart';
 import 'package:root2route/screens/farmer/market_screen.dart';
 import 'package:root2route/screens/farmer/scan_screen.dart';
-import 'package:root2route/screens/farmer/notifications_screen.dart';
+import 'package:root2route/screens/notifications_screen.dart';
 
 class FarmerHomeScreen extends StatefulWidget {
   const FarmerHomeScreen({super.key});
@@ -76,17 +76,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                     ),
                     label: "Scan",
                   ),
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.notifications_none,
-                      color: AppColors.iconSecondary,
-                    ),
-                    selectedIcon: Icon(
-                      Icons.notification_important,
-                      color: AppColors.iconPrimary,
-                    ),
-                    label: "Notifications",
-                  ),
+
                   NavigationDestination(
                     icon: Icon(
                       Icons.shopping_bag_outlined,
@@ -97,6 +87,17 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                       color: AppColors.iconPrimary,
                     ),
                     label: "Market",
+                  ),
+                  NavigationDestination(
+                    icon: Icon(
+                      Icons.notifications_none,
+                      color: AppColors.iconSecondary,
+                    ),
+                    selectedIcon: Icon(
+                      Icons.notification_important,
+                      color: AppColors.iconPrimary,
+                    ),
+                    label: "Notifications",
                   ),
                   NavigationDestination(
                     icon: Icon(

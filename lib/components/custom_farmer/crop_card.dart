@@ -34,7 +34,10 @@ class CropCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(18),
-                child: HeaderCard(url: 'images/crop.png', title: 'Wheat'),
+                child: HeaderCard(
+                  url: 'assets/images/crop.jpg',
+                  title: 'Wheat',
+                ),
               ),
               const SizedBox(height: 12),
 
