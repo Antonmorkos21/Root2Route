@@ -61,9 +61,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, VerificationScreen.id);
 
-                      if (formKey.currentState!.validate()) {
-                        print('Login Success');
-                      }
+                      if (formKey.currentState!.validate()) {}
                     },
                   ),
                 ],
