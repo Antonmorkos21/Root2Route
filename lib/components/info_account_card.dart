@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 
-class InfoCard extends StatelessWidget {
+class InfoAccountCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String info;
-  const InfoCard({
+  const InfoAccountCard({
     super.key,
     required this.icon,
     required this.title,

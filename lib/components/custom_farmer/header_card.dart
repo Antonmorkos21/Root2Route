@@ -13,7 +13,7 @@ class HeaderCard extends StatelessWidget {
       children: [
         SizedBox(
           width: double.infinity,
-          height: 200,
+          height: 230,
           child: Image.asset(url, fit: BoxFit.cover),
         ),
 

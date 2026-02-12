@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 
-class SettingsCard extends StatelessWidget {
+class SettingsAccountCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String? value;
   final IconData iconButton;
   final VoidCallback onPressed;
 
-  const SettingsCard({
+  const SettingsAccountCard({
     super.key,
     required this.icon,
     required this.title,
@@ -33,8 +33,7 @@ class SettingsCard extends StatelessWidget {
             ),
           ],
         ),
-       // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-        padding:  EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 7),
 
         child: Row(
           children: [

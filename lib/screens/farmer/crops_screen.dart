@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:root2route/components/custom_farmer/crop_card.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
+import 'package:root2route/screens/RequestProduct.dart';
 
 class CropsScreen extends StatefulWidget {
   const CropsScreen({super.key});
@@ -12,10 +13,18 @@ class CropsScreen extends StatefulWidget {
 
 class _CropsScreenState extends State<CropsScreen> {
   final TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
@@ -47,7 +56,7 @@ class _CropsScreenState extends State<CropsScreen> {
                     ),
                   ],
                 ),
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 20,
                   backgroundColor: Color(0xFFEAEAEA),
                   child: Icon(Icons.person, color: AppColors.iconSecondary),
@@ -57,30 +66,13 @@ class _CropsScreenState extends State<CropsScreen> {
           ],
         ),
       ),
-
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: AppSizes.height(context) * 0.12,
-          right: AppSizes.width(context) * 0.03,
-        ),
-        child: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: const Color(0xFF2ECC71),
-          shape: const CircleBorder(),
-          tooltip: 'Request to add crops',
-          child: const Icon(Icons.add, color: AppColors.iconPrimary),
-        ),
-      ),
       body: Column(
         children: [
           Padding(
             padding: EdgeInsets.all(AppSizes.paddingSize(context)),
             child: TextField(
               controller: searchController,
-              onChanged: (value) {
-                setState(() {});
-              },
-
+              onChanged: (_) => setState(() {}),
               decoration: InputDecoration(
                 hintText: "Search...",
                 prefixIcon: const Icon(Icons.search),
@@ -107,18 +99,42 @@ class _CropsScreenState extends State<CropsScreen> {
               ),
             ),
           ),
-          SizedBox(height: 10),
-
+          const SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(AppSizes.paddingSize(context)),
               itemCount: 5,
               itemBuilder: (context, index) {
-                return CropCard();
+                return const CropCard();
               },
             ),
           ),
         ],
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: AppSizes.height(context) * 0.12,
+          right: AppSizes.width(context) * 0.03,
+        ),
+        child: FloatingActionButton(
+          backgroundColor: const Color(0xFF2ECC71),
+          shape: const CircleBorder(),
+          tooltip: 'Request to add crops',
+          child: const Icon(Icons.add, color: AppColors.iconPrimary),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder:
+                  (_) => AlertDialog(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    actions: [RequestProduct()],
+                  ),
+            );
+          },
+        ),
       ),
     );
   }

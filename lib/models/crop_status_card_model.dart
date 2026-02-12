@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FeatureCropModel {
+class CropStatusCardModel {
   final String season;
   final String marketStatus;
   final IconData seasonIcon;
@@ -8,7 +8,7 @@ class FeatureCropModel {
   final IconData marketIcon;
   final Color marketColor;
 
-  const FeatureCropModel({
+  const CropStatusCardModel({
     required this.season,
     required this.marketStatus,
     required this.seasonIcon,
