@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/models/feature_crop_model.dart';
+import 'package:root2route/models/crop_status_card_model.dart';
 
 class CropStatusCard extends StatelessWidget {
-  final FeatureCropModel featureCrop;
+  final CropStatusCardModel featureCrop;
 
   const CropStatusCard({super.key, required this.featureCrop});
 

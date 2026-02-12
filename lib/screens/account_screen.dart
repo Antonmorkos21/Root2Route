@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_dialog.dart';
-import 'package:root2route/components/info_card.dart';
-import 'package:root2route/components/settings_card.dart';
+import 'package:root2route/components/info_account_card.dart';
+import 'package:root2route/components/settings_account_card.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
+import 'package:root2route/screens/auth/login_screen.dart';
 import 'package:root2route/screens/change_password_screen.dart';
 import 'package:root2route/screens/edit_info_screen.dart';
 
@@ -51,9 +52,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: CircleAvatar(
                           backgroundImage: AssetImage("images/account.jpg"),
                           backgroundColor: Color(0xFFEAEAEA),
-                        
                         ),
-
                       ),
                     ),
                     Positioned(
@@ -109,17 +108,17 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
 
-              InfoCard(
+              InfoAccountCard(
                 icon: Icons.badge_outlined,
                 title: 'Name',
                 info: 'Anton Morkos',
               ),
-              InfoCard(
+              InfoAccountCard(
                 icon: Icons.email,
                 title: 'Email',
                 info: 'Antonmorkos6@gamil.com',
               ),
-              InfoCard(
+              InfoAccountCard(
                 icon: Icons.account_circle_outlined,
                 title: 'Account type',
                 info: 'Farmer',
@@ -144,7 +143,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
 
-              SettingsCard(
+              SettingsAccountCard(
                 icon: Icons.lock_outline,
                 title: 'Change Password',
                 value: '',
@@ -158,7 +157,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   );
                 },
               ),
-              SettingsCard(
+              SettingsAccountCard(
                 icon: Icons.public,
                 title: ' Language settings',
 
@@ -171,29 +170,35 @@ class _AccountScreenState extends State<AccountScreen> {
                     builder:
                         (_) => AlertDialog(
                           title: const Text("Change Language"),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ListTile(
-                                title: const Text("English"),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              ListTile(
-                                title: const Text("العربية"),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
+
+                          content: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: const Text("English"),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                ListTile(
+                                  title: const Text("العربية"),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                   );
                 },
               ),
 
-              SettingsCard(
+              SettingsAccountCard(
                 icon: Icons.delete,
                 title: 'DeleteAccount',
                 value: '',
@@ -201,18 +206,27 @@ class _AccountScreenState extends State<AccountScreen> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    barrierDismissible: false,
                     builder:
                         (_) => AlertDialog(
-                          title: const Text('Delete account?'),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          title: const Text(
+                            'Delete account?',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           content: const Text(
                             'This action is permanent. Your account and data will be deleted.',
+                          ),
+                          actionsPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 10,
                           ),
                           actions: [
                             Row(
                               children: [
                                 const SizedBox(width: 12),
-
                                 Expanded(
                                   child: CustomButton(
                                     text: 'Ok',
@@ -226,21 +240,24 @@ class _AccountScreenState extends State<AccountScreen> {
                                         builder:
                                             (_) => CustomDialog(
                                               title: 'Done!',
-                                              message: 'Saved successfully ',
+                                              message:
+                                                  'The account has been deleted',
                                               icon: Icons.check_circle_rounded,
                                               color: AppColors.primary,
                                               buttonText: 'Continue',
                                               onPressed: () {
-                                                Navigator.pop(context);
+                                                Navigator.pushNamedAndRemoveUntil(
+                                                  context,
+                                                  LoginScreen.id,
+                                                  (route) => false,
+                                                );
                                               },
                                             ),
                                       );
                                     },
                                   ),
                                 ),
-
                                 const SizedBox(width: 20),
-
                                 Expanded(
                                   child: CustomButton(
                                     text: 'Cancel',

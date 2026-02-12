@@ -4,7 +4,7 @@ import 'package:root2route/components/custom_farmer/crop_info_card.dart';
 import 'package:root2route/components/custom_farmer/crop_status_card.dart';
 import 'package:root2route/components/custom_farmer/header_card.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
-import 'package:root2route/models/feature_crop_model.dart';
+import 'package:root2route/models/crop_status_card_model.dart';
 import 'package:root2route/models/info_crop_model.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 
@@ -42,7 +42,7 @@ class CropCard extends StatelessWidget {
               const SizedBox(height: 12),
 
               CropStatusCard(
-                featureCrop: FeatureCropModel(
+                featureCrop: CropStatusCardModel(
                   season: "winter",
                   marketStatus: "High market demand",
                   seasonIcon: Icons.local_florist,
