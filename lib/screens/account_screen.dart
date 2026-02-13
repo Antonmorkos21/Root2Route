@@ -8,6 +8,7 @@ import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/auth/login_screen.dart';
 import 'package:root2route/screens/change_password_screen.dart';
 import 'package:root2route/screens/edit_info_screen.dart';
+import 'package:root2route/screens/notifications_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -33,6 +34,25 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const NotificationsScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(
+                Icons.notification_important,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -91,14 +91,14 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                   ),
                   NavigationDestination(
                     icon: Icon(
-                      Icons.notifications_none,
+                      Icons.agriculture_outlined,
                       color: AppColors.iconSecondary,
                     ),
                     selectedIcon: Icon(
-                      Icons.notification_important,
+                      Icons.agriculture,
                       color: AppColors.iconPrimary,
                     ),
-                    label: "Notifi ",
+                    label: "Farm ",
                   ),
                   NavigationDestination(
                     icon: Icon(
