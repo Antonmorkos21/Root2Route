@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:root2route/core/theme/app_colors.dart';
 
 class AuthHeader extends StatelessWidget {
   final String title;
@@ -24,14 +25,14 @@ class AuthHeader extends StatelessWidget {
             color: const Color(0xFFEFFAF3),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Icon(icon, size: 36, color: const Color(0xFF2ECC71)),
+          child: Icon(icon, size: 36, color: AppColors.primary),
         ),
 
         const SizedBox(height: 25),
 
         Text(
           title,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 22,color: AppColors.textPrimary, fontWeight: FontWeight.bold),
         ),
 
         const SizedBox(height: 10),
@@ -39,7 +40,7 @@ class AuthHeader extends StatelessWidget {
         Text(
           description,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Colors.grey),
+          style: const TextStyle(color: AppColors.textOnSecondary),
         ),
 
         const SizedBox(height: 25),

@@ -19,54 +19,52 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  AuthHeader(
-                    title: 'Forgot Password?',
-                    description:
-                        'Enter your email address to receive a password reset link',
-                    icon: Icons.lock_reset,
-                  ),
+      resizeToAvoidBottomInset: false,
 
-                  CustomTextFormField(
-                    icon: Icons.email_outlined,
-                    label: 'Email Address',
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email address';
-                      }
-
-                      if (!RegExp(
-                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                      ).hasMatch(value)) {
-                        return 'Email is incorrect';
-                      }
-
-                      return null;
-                    },
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  CustomButton(
-                    text: 'Send Reset Link',
-                    onPressed: () {
-                      Navigator.pushNamed(context, VerificationScreen.id);
-
-                      if (formKey.currentState!.validate()) {}
-                    },
-                  ),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              SizedBox(height: 150),
+              AuthHeader(
+                title: 'Forgot Password?',
+                description:
+                    'Enter your email address to receive a password reset link',
+                icon: Icons.lock_reset,
               ),
-            ),
+
+              CustomTextFormField(
+                icon: Icons.email_outlined,
+                label: 'Email Address',
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email address';
+                  }
+
+                  if (!RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  ).hasMatch(value)) {
+                    return 'Email is incorrect';
+                  }
+
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 25),
+
+              CustomButton(
+                text: 'Send Reset Link',
+                onPressed: () {
+                  if (!formKey.currentState!.validate()) return;
+                  Navigator.pushNamed(context, VerificationScreen.id);
+                },
+              ),
+            ],
           ),
         ),
       ),

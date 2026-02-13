@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 
-class AccountTile extends StatelessWidget {
+class AccountTypeButton extends StatelessWidget {
   final String text;
   final IconData icon;
   final bool selected;
   final VoidCallback onTap;
 
-  const AccountTile({
+  const AccountTypeButton({
     super.key,
     required this.text,
     required this.icon,
@@ -31,7 +31,7 @@ class AccountTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
             color: selected ? AppColors.primary : const Color(0xFFE3E3E3),
-            width: 1.6,
+            width: 2,
           ),
         ),
         child: Column(
@@ -50,7 +50,8 @@ class AccountTile extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12.5,
                   fontWeight: FontWeight.w600,
-                  color: selected ? AppColors.primary : const Color(0xFF6F6F6F),
+                  color:
+                      selected ? AppColors.primary : AppColors.textOnSecondary,
                 ),
               ),
             ),
@@ -61,4 +62,4 @@ class AccountTile extends StatelessWidget {
   }
 }
 
-enum AccountType { farmer, merchant, factory, defult }
+enum AccountType { farmer, merchant, factory }

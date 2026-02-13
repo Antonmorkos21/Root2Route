@@ -18,7 +18,6 @@ class _CropsScreenState extends State<CropsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-
       appBar: AppBar(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
@@ -45,13 +44,13 @@ class _CropsScreenState extends State<CropsScreen> {
                       "Choose the best crop to grow and sell",
                       style: TextStyle(
                         color: AppColors.textOnSecondary,
-                        fontSize: 13,
+                        fontSize: 15,
                       ),
                     ),
                   ],
                 ),
                 const CircleAvatar(
-                  radius: 20,
+                  radius: 25,
                   backgroundColor: Color(0xFFEAEAEA),
                   child: Icon(Icons.person, color: AppColors.iconSecondary),
                 ),
@@ -111,7 +110,7 @@ class _CropsScreenState extends State<CropsScreen> {
           right: AppSizes.width(context) * 0.03,
         ),
         child: FloatingActionButton(
-          backgroundColor: const Color(0xFF2ECC71),
+          backgroundColor: AppColors.primary,
           shape: const CircleBorder(),
           tooltip: 'Request to add crops',
           child: const Icon(Icons.add, color: AppColors.iconPrimary),

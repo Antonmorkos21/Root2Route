@@ -21,8 +21,9 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
-        backgroundColor: Colors.transparent,
         title: const Text(
           "Account",
           style: TextStyle(
@@ -221,7 +222,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                           actionsPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
-                            vertical: 10,
+                            vertical: 25,
                           ),
                           actions: [
                             Row(

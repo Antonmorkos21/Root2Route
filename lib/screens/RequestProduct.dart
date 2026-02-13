@@ -23,7 +23,7 @@ class _RequestProductState extends State<RequestProduct> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: Container(
         width: AppSizes.width(context),
         child: Form(
@@ -32,15 +32,14 @@ class _RequestProductState extends State<RequestProduct> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: const AuthHeader(
-                    title: 'Request Crop',
-                    description: 'Send a request for a crop you need',
-                    icon: Icons.spa,
-                  ),
+                SizedBox(height: 10),
+                AuthHeader(
+                  title: 'Request Crop',
+                  description: 'Send a request for a crop you need',
+                  icon: Icons.spa,
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 18),
 
                 const Text(
                   'Crop Name',

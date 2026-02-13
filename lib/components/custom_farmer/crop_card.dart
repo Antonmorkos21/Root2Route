@@ -20,7 +20,7 @@ class CropCard extends StatelessWidget {
           margin: EdgeInsets.all(AppSizes.marginSize(context)),
           padding: EdgeInsets.all(AppSizes.paddingSize(context)),
           decoration: BoxDecoration(
-            color: AppColors.iconPrimary,
+            color: AppColors.OnSecondary,
             borderRadius: BorderRadius.circular(24),
             boxShadow: const [
               BoxShadow(

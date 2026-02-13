@@ -30,29 +30,30 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
     return Scaffold(
       extendBody: true,
       body: screens[index],
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(AppSizes.paddingSize(context)),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: AppColors.iconPrimary,
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 16,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: NavigationBarTheme(
-              data: const NavigationBarThemeData(
-                indicatorColor: AppColors.primary,
-                labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-              ),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: AppColors.iconPrimary,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 16,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: NavigationBarTheme(
+            data: const NavigationBarThemeData(
+              indicatorColor: AppColors.primary,
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(top: 15, bottom: 0),
               child: NavigationBar(
-                height: 65,
+                height: 30,
                 backgroundColor: Colors.transparent,
                 selectedIndex: index,
                 onDestinationSelected: (i) => setState(() => index = i),
@@ -97,7 +98,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                       Icons.notification_important,
                       color: AppColors.iconPrimary,
                     ),
-                    label: "Notifications",
+                    label: "Notifi ",
                   ),
                   NavigationDestination(
                     icon: Icon(
