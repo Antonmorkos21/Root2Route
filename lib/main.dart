@@ -9,15 +9,8 @@ import 'package:root2route/screens/auth/register_screen.dart';
 import 'package:root2route/screens/farmer/farmer_home_screen.dart';
 
 // void main() {
-//   SystemChrome.setSystemUIOverlayStyle(
-//     const SystemUiOverlayStyle(
-//       statusBarColor: Colors.transparent,
-//       statusBarIconBrightness: Brightness.dark,
-//     ),
-//   );
 
 //   runApp(const MyApp());
-
 // }
 
 void main() => runApp(

@@ -19,45 +19,36 @@ class _CropsScreenState extends State<CropsScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Column(
+        title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Crops",
-                      style: TextStyle(
-                        color: AppColors.textPrimary,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      "Choose the best crop to grow and sell",
-                      style: TextStyle(
-                        color: AppColors.textOnSecondary,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ],
-                ),
-                const CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Color(0xFFEAEAEA),
-                  child: Icon(Icons.person, color: AppColors.iconSecondary),
-                ),
-              ],
+            Text(
+              "Crops",
+              style: TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 4),
+            Text(
+              "Choose the best crop to grow and sell",
+              style: TextStyle(color: AppColors.textOnSecondary, fontSize: 15),
             ),
           ],
         ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: CircleAvatar(
+              radius: 25,
+              backgroundColor: Color(0xFFEAEAEA),
+              child: Icon(Icons.person, color: AppColors.iconSecondary),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [

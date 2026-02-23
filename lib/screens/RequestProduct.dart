@@ -32,7 +32,7 @@ class _RequestProductState extends State<RequestProduct> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 AuthHeader(
                   title: 'Request Crop',
                   description: 'Send a request for a crop you need',
@@ -49,7 +49,7 @@ class _RequestProductState extends State<RequestProduct> {
                   ),
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
 
                 CustomTextFormField(
                   icon: Icons.grass,
@@ -63,7 +63,7 @@ class _RequestProductState extends State<RequestProduct> {
                   },
                 ),
 
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 const Text(
                   'Crop Type',
                   style: TextStyle(
@@ -72,7 +72,7 @@ class _RequestProductState extends State<RequestProduct> {
                   ),
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 DropdownButtonFormField<String>(
                   value: selectedCropType,
                   decoration: InputDecoration(
@@ -103,7 +103,7 @@ class _RequestProductState extends State<RequestProduct> {
                   },
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 17),
 
                 Row(
                   children: [

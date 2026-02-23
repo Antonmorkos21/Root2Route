@@ -5,20 +5,20 @@ import 'package:root2route/components/custom_farmer/header_card.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/models/info_crop_model.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+class CropDetailsScreen extends StatefulWidget {
+  const CropDetailsScreen({super.key});
 
   @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+  State<CropDetailsScreen> createState() => _CropDetailsScreenState();
 }
 
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+class _CropDetailsScreenState extends State<CropDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Product Details",
+          "Crop Details",
           style: TextStyle(color: AppColors.textPrimary),
         ),
         backgroundColor: Colors.white,
@@ -96,11 +96,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
             const SizedBox(height: 30),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CustomButton(text: "App Plan", onPressed: () {}),
-            ),
-            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(

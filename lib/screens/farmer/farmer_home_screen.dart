@@ -21,13 +21,13 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
     CropsScreen(),
     ScanScreen(),
     MarketScreen(),
-    NotificationsScreen(),
     AccountScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //  appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
       extendBody: true,
       body: screens[index],
       bottomNavigationBar: Container(
@@ -89,17 +89,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                     ),
                     label: "Market",
                   ),
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.agriculture_outlined,
-                      color: AppColors.iconSecondary,
-                    ),
-                    selectedIcon: Icon(
-                      Icons.agriculture,
-                      color: AppColors.iconPrimary,
-                    ),
-                    label: "Farm ",
-                  ),
+
                   NavigationDestination(
                     icon: Icon(
                       Icons.person_4_outlined,

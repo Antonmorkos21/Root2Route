@@ -14,10 +14,10 @@ class _ScanScreenState extends State<ScanScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.transparent,
+        elevation: 0,
         title: const Text(
-          "Diagnosis of Crop Diseases",
+          "Scan Crop",
           style: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
@@ -86,7 +86,7 @@ class _ScanScreenState extends State<ScanScreen> {
                   color: AppColors.iconPrimary,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color:  Color.fromARGB(255, 0, 0, 0).withOpacity(0.2),
+                    color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.2),
                   ),
                   boxShadow: [
                     BoxShadow(

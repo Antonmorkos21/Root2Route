@@ -7,7 +7,7 @@ import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/models/crop_status_card_model.dart';
 import 'package:root2route/models/info_crop_model.dart';
 import 'package:root2route/core/theme/app_colors.dart';
-import 'package:root2route/screens/farmer/product_details_screen.dart';
+import 'package:root2route/screens/farmer/crop_details_screen.dart';
 
 class CropCard extends StatelessWidget {
   const CropCard({super.key});
@@ -102,7 +102,7 @@ class CropCard extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ProductDetailsScreen(),
+                      builder: (context) => const CropDetailsScreen(),
                     ),
                   );
                 },
