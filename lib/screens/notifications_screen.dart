@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/components/custom_button.dart';
-import 'package:root2route/components/custom_farmer/crop_info_card.dart';
-import 'package:root2route/components/custom_farmer/header_card.dart';
 import 'package:root2route/core/theme/app_colors.dart';
-import 'package:root2route/models/info_crop_model.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
