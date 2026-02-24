@@ -33,10 +33,12 @@ class _RequestProductState extends State<RequestProduct> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 5),
-                AuthHeader(
-                  title: 'Request Crop',
-                  description: 'Send a request for a crop you need',
-                  icon: Icons.spa,
+                Center(
+                  child: AuthHeader(
+                    title: 'Request Crop',
+                    description: 'Send a request for a crop you need',
+                    icon: Icons.spa,
+                  ),
                 ),
 
                 const SizedBox(height: 18),

@@ -33,7 +33,7 @@ class CustomProductCard extends StatelessWidget {
               children: [
                 Image.asset(
                   product.imagePath,
-                  height: 120,
+                  height: 135,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
@@ -107,7 +107,6 @@ class CustomProductCard extends StatelessWidget {
                       Icon(
                         Icons.location_on_rounded,
                         size: 14,
-
                         color: Colors.green.withOpacity(0.7),
                       ),
                       const SizedBox(width: 4),

@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:root2route/components/account_type_button.dart';
 import 'package:root2route/components/custom_button.dart';
-import 'package:root2route/components/custom_dialog.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/auth/login_screen.dart';
+import 'package:root2route/screens/farmer/farmer_home_screen.dart';
 
 class AddCompanyScreen extends StatefulWidget {
   const AddCompanyScreen({super.key});
@@ -22,6 +23,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
   final addressController = TextEditingController();
   final descriptionController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  AccountType? selectedType;
 
   File? _image;
   final ImagePicker _picker = ImagePicker();
@@ -48,7 +50,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black), // لون سهم الرجوع
+        iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -63,14 +65,14 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
           key: formKey,
           child: Column(
             children: [
-              const SizedBox(height: 30),
+              SizedBox(height: 10),
               GestureDetector(
                 onTap: _pickImage,
                 child: Center(
                   child: Stack(
                     children: [
                       CircleAvatar(
-                        radius: 55,
+                        radius: 45,
                         backgroundColor: Colors.grey[100],
                         backgroundImage:
                             _image != null ? FileImage(_image!) : null,
@@ -78,7 +80,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                             _image == null
                                 ? Icon(
                                   Icons.add_a_photo_outlined,
-                                  size: 35,
+                                  size: 30,
                                   color: AppColors.primary,
                                 )
                                 : null,
@@ -87,11 +89,11 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                         bottom: 0,
                         right: 0,
                         child: CircleAvatar(
-                          radius: 18,
+                          radius: 15,
                           backgroundColor: AppColors.primary,
                           child: const Icon(
                             Icons.edit,
-                            size: 15,
+                            size: 13,
                             color: Colors.white,
                           ),
                         ),
@@ -101,7 +103,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                 ),
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 15),
 
               CustomTextFormField(
                 icon: Icons.business_outlined,
@@ -110,6 +112,24 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                 validator: (value) {
                   if (value == null || value.isEmpty)
                     return 'Please enter company name';
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 15),
+              CustomTextFormField(
+                icon: Icons.email_outlined,
+                label: 'Email Address',
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty)
+                    return 'Please enter your email address';
+                  if (!RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  ).hasMatch(value)) {
+                    return 'Email is incorrect';
+                  }
                   return null;
                 },
               ),
@@ -122,7 +142,10 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                 keyboardType: TextInputType.phone,
                 validator: (value) {
                   if (value == null || value.isEmpty)
-                    return 'Please enter phone number';
+                    return 'Please enter your phone';
+                  if (!RegExp(r'^[0-9]{7,15}$').hasMatch(value)) {
+                    return 'Enter a valid phone number';
+                  }
                   return null;
                 },
               ),
@@ -140,16 +163,54 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
               ),
               const SizedBox(height: 15),
 
-              CustomTextFormField(
-                icon: Icons.email_outlined,
-                label: 'Email Address',
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty)
-                    return 'Please enter email';
-                  return null;
-                },
+              Align(
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  'Account Type',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+              ),
+
+              const SizedBox(height: 15),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: AccountTypeButton(
+                      text: 'Farmer',
+                      icon: Icons.agriculture_outlined,
+                      selected: selectedType == AccountType.farmer,
+                      onTap:
+                          () => setState(() {
+                            selectedType = AccountType.farmer;
+                          }),
+                    ),
+                  ),
+                  const SizedBox(width: 11),
+                  Expanded(
+                    child: AccountTypeButton(
+                      text: 'Merchant',
+                      icon: Icons.storefront_outlined,
+                      selected: selectedType == AccountType.merchant,
+                      onTap:
+                          () => setState(() {
+                            selectedType = AccountType.merchant;
+                          }),
+                    ),
+                  ),
+                  const SizedBox(width: 11),
+                  Expanded(
+                    child: AccountTypeButton(
+                      text: 'Factory',
+                      icon: Icons.factory_outlined,
+                      selected: selectedType == AccountType.factory,
+                      onTap:
+                          () => setState(() {
+                            selectedType = AccountType.factory;
+                          }),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 15),
 
@@ -165,34 +226,66 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                 },
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 17),
 
               CustomButton(
                 text: 'Register Company',
                 onPressed: () {
                   if (!formKey.currentState!.validate()) return;
-
-                  showDialog(
-                    context: context,
-                    builder:
-                        (_) => CustomDialog(
-                          title: 'Done!',
-                          message: 'Company added successfully 🎉',
-                          icon: Icons.check_circle_rounded,
-                          color: AppColors.primary,
-                          buttonText: 'OK',
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.pushReplacementNamed(
-                              context,
-                              LoginScreen.id,
-                            );
-                          },
+                  if (selectedType == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please select an account type'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+                  switch (selectedType!) {
+                    case AccountType.farmer:
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const FarmerHomeScreen(),
                         ),
-                  );
+                      );
+                      break;
+
+                    case AccountType.merchant:
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => const LoginScreen()),
+                      );
+                      break;
+
+                    case AccountType.factory:
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => const LoginScreen()),
+                      );
+                      break;
+                  }
+
+                  // showDialog(
+                  //   context: context,
+                  //   builder:
+                  //       (_) => CustomDialog(
+                  //         title: 'Done!',
+                  //         message: 'Company added successfully 🎉',
+                  //         icon: Icons.check_circle_rounded,
+                  //         color: AppColors.primary,
+                  //         buttonText: 'OK',
+                  //         onPressed: () {
+                  //           //Navigator.pop(context);
+                  //           // Navigator.pushReplacementNamed(
+                  //           //   context,
+                  //           //   LoginScreen.id,
+                  //           // );
+                  //         },
+                  //       ),
+                  // );
                 },
               ),
-              const SizedBox(height: 20),
             ],
           ),
         ),

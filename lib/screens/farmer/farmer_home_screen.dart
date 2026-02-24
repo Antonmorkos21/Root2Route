@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
-import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/screens/account_screen.dart';
 import 'package:root2route/screens/farmer/crops_screen.dart';
 import 'package:root2route/screens/farmer/market_screen.dart';
 import 'package:root2route/screens/farmer/scan_screen.dart';
-import 'package:root2route/screens/notifications_screen.dart';
 
 class FarmerHomeScreen extends StatefulWidget {
   const FarmerHomeScreen({super.key});
@@ -27,82 +25,75 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //  appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
       extendBody: true,
       body: screens[index],
       bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        margin: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
           color: AppColors.iconPrimary,
-          boxShadow: const [
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 16,
-              offset: Offset(0, 4),
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(30),
           child: NavigationBarTheme(
-            data: const NavigationBarThemeData(
-              indicatorColor: AppColors.primary,
-              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            data: NavigationBarThemeData(
+              indicatorColor: AppColors.primary.withOpacity(0.2),
+              labelTextStyle: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) {
+                  return const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  );
+                }
+                return TextStyle(fontSize: 12, color: AppColors.iconSecondary);
+              }),
+              iconTheme: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) {
+                  return const IconThemeData(
+                    color: AppColors.primary,
+                    size: 26,
+                  );
+                }
+                return IconThemeData(color: AppColors.iconSecondary, size: 24);
+              }),
             ),
-            child: Padding(
-              padding: EdgeInsets.only(top: 15, bottom: 0),
-              child: NavigationBar(
-                height: 30,
-                backgroundColor: Colors.transparent,
-                selectedIndex: index,
-                onDestinationSelected: (i) => setState(() => index = i),
-                destinations: [
-                  NavigationDestination(
-                    icon: Icon(Icons.grass, color: AppColors.iconSecondary),
-                    selectedIcon: Icon(
-                      Icons.grass_rounded,
-                      color: AppColors.iconPrimary,
-                    ),
-                    label: "Crops",
-                  ),
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.camera_alt_sharp,
-                      color: AppColors.iconSecondary,
-                    ),
-                    selectedIcon: Icon(
-                      Icons.camera_enhance_outlined,
-                      color: AppColors.iconPrimary,
-                    ),
-                    label: "Scan",
-                  ),
-
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.shopping_bag_outlined,
-                      color: AppColors.iconSecondary,
-                    ),
-                    selectedIcon: Icon(
-                      Icons.shopping_basket_outlined,
-                      color: AppColors.iconPrimary,
-                    ),
-                    label: "Market",
-                  ),
-
-                  NavigationDestination(
-                    icon: Icon(
-                      Icons.person_4_outlined,
-                      color: AppColors.iconSecondary,
-                    ),
-                    selectedIcon: Icon(
-                      Icons.person,
-                      color: AppColors.iconPrimary,
-                    ),
-                    label: "Account",
-                  ),
-                ],
-              ),
+            child: NavigationBar(
+              height: 65,
+              elevation: 0,
+              backgroundColor: Colors.white,
+              selectedIndex: index,
+              onDestinationSelected: (i) => setState(() => index = i),
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+              destinations: const [
+                NavigationDestination(
+                  icon: Icon(Icons.grass_outlined),
+                  selectedIcon: Icon(Icons.grass_rounded),
+                  label: "Crops",
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.camera_enhance_outlined),
+                  selectedIcon: Icon(Icons.camera_enhance),
+                  label: "Scan",
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.shopping_bag_outlined),
+                  selectedIcon: Icon(Icons.shopping_bag),
+                  label: "Market",
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.person_outline),
+                  selectedIcon: Icon(Icons.person),
+                  label: "Account",
+                ),
+              ],
             ),
           ),
         ),

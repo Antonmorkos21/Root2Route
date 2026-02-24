@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/models/details_product_model.dart';
 import 'package:root2route/screens/guest/add_company_screen.dart';
 import 'package:root2route/screens/guest/custom_product_card.dart';
@@ -18,28 +17,47 @@ class _productsScreenState extends State<productsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Products"),
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: const Text("Products", style: TextStyle(color: Colors.black)),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddCompanyScreen()),
-                );
-              },
-              icon: const Icon(Icons.add, size: 20),
-              label: const Text("Add Company"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+            padding: const EdgeInsets.only(right: 10),
+            child: Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 140,
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddCompanyScreen(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.add_business_outlined, size: 22),
+                  label: const Text(
+                    "Add Company",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF1ED760), // الأخضر الفاتح
+                    foregroundColor: Colors.black, // النص والأيقونة بالأسود
+                    elevation: 5,
+                    shadowColor: Colors.black.withOpacity(0.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        30,
+                      ), // حواف دائرية جداً
+                    ),
+                    padding: EdgeInsets.zero, // عشان الـ SizedBox هو اللي يتحكم
+                  ),
                 ),
               ),
             ),

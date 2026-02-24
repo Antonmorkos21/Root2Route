@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_farmer/crop_info_card.dart';
 import 'package:root2route/components/custom_farmer/header_card.dart';
 import 'package:root2route/core/theme/app_colors.dart';
@@ -24,12 +23,6 @@ class _CropDetailsScreenState extends State<CropDetailsScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back, color: AppColors.iconSecondary),
-        ),
       ),
       body: SingleChildScrollView(
         child: Column(

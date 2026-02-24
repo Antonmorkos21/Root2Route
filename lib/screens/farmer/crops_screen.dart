@@ -19,10 +19,13 @@ class _CropsScreenState extends State<CropsScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
-        title: const Column(
+        toolbarHeight: 90,
+        automaticallyImplyLeading: false,
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               "Crops",
@@ -32,23 +35,17 @@ class _CropsScreenState extends State<CropsScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               "Choose the best crop to grow and sell",
-              style: TextStyle(color: AppColors.textOnSecondary, fontSize: 15),
+              style: TextStyle(
+                color: AppColors.textOnSecondary,
+                fontSize: 14,
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ],
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: CircleAvatar(
-              radius: 25,
-              backgroundColor: Color(0xFFEAEAEA),
-              child: Icon(Icons.person, color: AppColors.iconSecondary),
-            ),
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -64,9 +61,20 @@ class _CropsScreenState extends State<CropsScreen> {
                   borderRadius: BorderRadius.circular(16),
                   borderSide: const BorderSide(
                     color: AppColors.primary,
-                    width: 1,
+                    width: 1.5, 
                   ),
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: const BorderSide(color: Colors.black, width: 1),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: const BorderSide(
+                    color: Color.fromARGB(255, 75, 46, 204),
+                  ),
+                ),
+                
                 suffixIcon:
                     searchController.text.isEmpty
                         ? null
@@ -77,9 +85,6 @@ class _CropsScreenState extends State<CropsScreen> {
                             setState(() {});
                           },
                         ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
               ),
             ),
           ),

@@ -6,7 +6,7 @@ import 'package:root2route/screens/auth/register_screen.dart';
 import 'package:root2route/components/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
-import 'package:root2route/screens/farmer/farmer_home_screen.dart';
+import 'package:root2route/screens/guest/products_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = '/loginScreen';
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder:
-                                        (context) => const FarmerHomeScreen(),
+                                        (context) => const productsScreen(),
                                   ),
                                 );
                               },
