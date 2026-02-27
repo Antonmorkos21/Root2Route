@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/account_screen.dart';
 import 'package:root2route/screens/farmer/crops_screen.dart';
-import 'package:root2route/screens/farmer/market_screen.dart';
+import 'package:root2route/screens/market_screen.dart';
 import 'package:root2route/screens/farmer/scan_screen.dart';
 
 class FarmerHomeScreen extends StatefulWidget {
@@ -25,7 +25,6 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       body: screens[index],
       bottomNavigationBar: Container(
         margin: const EdgeInsets.only(left: 15, right: 15, bottom: 20),

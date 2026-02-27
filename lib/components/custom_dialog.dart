@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'custom_button.dart'; 
+import 'custom_button.dart';
+
 class CustomDialog extends StatelessWidget {
   final String title;
   final String message;
@@ -57,10 +58,7 @@ class CustomDialog extends StatelessWidget {
 
             SizedBox(
               width: double.infinity,
-              child: CustomButton(
-                text: buttonText,
-                onPressed: onPressed,
-              ),
+              child: CustomButton(text: buttonText, onPressed: onPressed),
             ),
           ],
         ),

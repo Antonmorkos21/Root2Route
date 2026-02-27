@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class DetailsProductModel {
   final String imagePath;
   final String title;
@@ -5,7 +7,10 @@ class DetailsProductModel {
   final String price;
   final String quantity;
   final String description;
-
+  final String badgeText;
+  final String buttonText;
+  final Color badgeColor;
+  final VoidCallback onPressed;
   DetailsProductModel({
     required this.imagePath,
     required this.title,
@@ -13,5 +18,9 @@ class DetailsProductModel {
     required this.price,
     required this.quantity,
     required this.description,
+    required this.badgeText,
+    required this.badgeColor,
+    required this.buttonText,
+     required this.onPressed,
   });
 }

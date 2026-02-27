@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/models/details_product_model.dart';
-import 'package:root2route/screens/guest/add_company_screen.dart';
 import 'package:root2route/components/custom_product_card.dart';
+import 'package:root2route/screens/selling_crop_screen.dart';
 
-class productsScreen extends StatefulWidget {
-  const productsScreen({super.key});
+class MarketScreen extends StatefulWidget {
+  const MarketScreen({super.key});
 
   @override
-  State<productsScreen> createState() => _productsScreenState();
+  State<MarketScreen> createState() => _MarketScreenState();
 }
 
-class _productsScreenState extends State<productsScreen> {
+class _MarketScreenState extends State<MarketScreen> {
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -24,50 +24,14 @@ class _productsScreenState extends State<productsScreen> {
         toolbarHeight: 70,
         backgroundColor: Colors.white,
         title: const Text(
-          "Products",
+          "Market",
           style: TextStyle(
             color: Colors.black,
             fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
         ),
-        centerTitle: false,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 140,
-                height: 50,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddCompanyScreen(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.add_business_outlined, size: 20),
-                  label: const Text(
-                    "Add Company",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -160,6 +124,27 @@ class _productsScreenState extends State<productsScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: AppColors.primary,
+        label: const Text(
+          "Selling ",
+          style: TextStyle(
+            color: AppColors.iconPrimary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        icon: const Icon(Icons.add, color: AppColors.iconPrimary),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              // The builder function takes a BuildContext and returns the new screen's widget
+              builder: (context) => const SellingCropScreen(),
+            ),
+          );
+        },
       ),
     );
   }

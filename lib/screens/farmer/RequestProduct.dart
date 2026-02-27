@@ -140,7 +140,7 @@ class _RequestProductState extends State<RequestProduct> {
                     Expanded(
                       child: CustomButton(
                         text: 'Cancel',
-                        color: AppColors.Secondary,
+                        color: Colors.grey.shade500,
                         onPressed: () {
                           Navigator.pop(context);
                         },

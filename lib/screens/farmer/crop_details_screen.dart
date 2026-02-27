@@ -29,8 +29,6 @@ class _CropDetailsScreenState extends State<CropDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 10),
-
-            // Header
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ClipRRect(

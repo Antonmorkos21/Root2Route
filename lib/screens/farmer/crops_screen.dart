@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:root2route/components/custom_farmer/crop_card.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
-import 'package:root2route/screens/RequestProduct.dart';
+import 'package:root2route/screens/farmer/RequestProduct.dart';
 
 class CropsScreen extends StatefulWidget {
   const CropsScreen({super.key});
@@ -21,8 +21,8 @@ class _CropsScreenState extends State<CropsScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: 90,
         automaticallyImplyLeading: false,
+        toolbarHeight: 70,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -39,9 +39,9 @@ class _CropsScreenState extends State<CropsScreen> {
             Text(
               "Choose the best crop to grow and sell",
               style: TextStyle(
-                color: AppColors.textOnSecondary,
-                fontSize: 14,
-                fontWeight: FontWeight.w800,
+                color: Colors.grey.shade600,
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
@@ -51,48 +51,62 @@ class _CropsScreenState extends State<CropsScreen> {
         children: [
           Padding(
             padding: EdgeInsets.all(AppSizes.paddingSize(context)),
-            child: TextField(
-              controller: searchController,
-              onChanged: (_) => setState(() {}),
-              decoration: InputDecoration(
-                hintText: "Search...",
-                prefixIcon: const Icon(Icons.search),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(
-                    color: AppColors.primary,
-                    width: 1.5, 
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.06),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: TextField(
+                controller: searchController,
+                onChanged: (_) => setState(() {}),
+                decoration: InputDecoration(
+                  hintText: 'Search crops...',
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  suffixIcon:
+                      searchController.text.isEmpty
+                          ? null
+                          : IconButton(
+                            icon: const Icon(Icons.close, color: Colors.grey),
+                            onPressed: () {
+                              searchController.clear();
+                              setState(() {});
+                              FocusScope.of(context).unfocus();
+                            },
+                          ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(
+                      color: AppColors.Secondary,
+                      width: 1.5,
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 14,
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(color: Colors.black, width: 1),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(
-                    color: Color.fromARGB(255, 75, 46, 204),
-                  ),
-                ),
-                
-                suffixIcon:
-                    searchController.text.isEmpty
-                        ? null
-                        : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            searchController.clear();
-                            setState(() {});
-                          },
-                        ),
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 6),
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               padding: EdgeInsets.all(AppSizes.paddingSize(context)),
               itemCount: 5,
+              separatorBuilder: (_, __) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 return const CropCard();
               },
@@ -101,14 +115,10 @@ class _CropsScreenState extends State<CropsScreen> {
         ],
       ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: AppSizes.height(context) * 0.12,
-          right: AppSizes.width(context) * 0.03,
-        ),
+        padding: const EdgeInsets.only(bottom: 16, right: 8),
         child: FloatingActionButton(
           backgroundColor: AppColors.primary,
           shape: const CircleBorder(),
-          tooltip: 'Request to add crops',
           child: const Icon(Icons.add, color: AppColors.iconPrimary),
           onPressed: () {
             showDialog(
@@ -119,7 +129,10 @@ class _CropsScreenState extends State<CropsScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18),
                     ),
-                    actions: [RequestProduct()],
+                    contentPadding: EdgeInsets.all(
+                      16,
+                    ), 
+                    content: const RequestProduct(),
                   ),
             );
           },
