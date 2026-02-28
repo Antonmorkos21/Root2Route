@@ -78,7 +78,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                   const SizedBox(height: 15),
                   CustomTextFormField(
                     icon: Icons.badge_outlined,
-                    isReadOnly: true,
+                    //isReadOnly: true,
                     label: '',
                     controller: UserType,
                   ),
