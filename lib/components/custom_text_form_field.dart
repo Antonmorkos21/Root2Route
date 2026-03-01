@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomTextFormField extends StatefulWidget {
   final IconData icon;
   final String label;
   final TextEditingController controller;
@@ -24,17 +24,25 @@ class CustomTextFormField extends StatelessWidget {
   });
 
   @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
+     bool obscureText = true;
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      obscureText: isPassword,
+      controller: widget.controller,
+      style: TextStyle(color: Colors.white),
+       obscureText: widget.isPassword ? obscureText : false,
       cursorColor: AppColors.primary,
-      readOnly: isReadOnly ?? false,
-      maxLines: maxLines ?? 1,
-      keyboardType: keyboardType,
-      validator: validator,
+      readOnly: widget.isReadOnly ?? false,
+      maxLines: widget.maxLines ?? 1,
+      keyboardType: widget.keyboardType,
+      validator: widget.validator,
       decoration: InputDecoration(
-        labelText: label,
+        labelText: widget.label,
         labelStyle: MaterialStateTextStyle.resolveWith((states) {
           if (states.contains(MaterialState.error)) {
             return const TextStyle(color: AppColors.colorError);
@@ -53,7 +61,7 @@ class CustomTextFormField extends StatelessWidget {
           }
           return TextStyle(color: AppColors.textOnSecondary);
         }),
-        prefixIcon: Icon(icon),
+        prefixIcon: Icon(widget.icon),
         prefixIconColor: MaterialStateColor.resolveWith((states) {
           if (states.contains(MaterialState.error)) {
             return AppColors.colorError;
@@ -63,6 +71,21 @@ class CustomTextFormField extends StatelessWidget {
           }
           return AppColors.iconSecondary;
         }),
+         suffixIcon: widget.isPassword
+           ? IconButton(
+                icon: Icon(
+                  obscureText
+                      ? Icons.visibility_off
+                      : Icons.visibility,
+                  color: AppColors.iconSecondary,
+                ),
+                onPressed: () {
+                  setState(() {
+                    obscureText = !obscureText;
+                  });
+                },
+              )
+            : null,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: AppColors.Secondary),

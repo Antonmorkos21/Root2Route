@@ -15,6 +15,7 @@ class _CropDetailsScreenState extends State<CropDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         title: const Text(
           "Crop Details",

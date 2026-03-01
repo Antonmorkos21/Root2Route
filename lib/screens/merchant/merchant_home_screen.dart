@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/account_screen.dart';
-import 'package:root2route/screens/farmer/crops_screen.dart';
 import 'package:root2route/screens/market_screen.dart';
-import 'package:root2route/screens/farmer/scan_screen.dart';
+import 'package:root2route/screens/merchant/history_screen.dart';
 
-class FarmerHomeScreen extends StatefulWidget {
-  const FarmerHomeScreen({super.key});
+class MerchantHomeScreen extends StatefulWidget {
+  const MerchantHomeScreen({super.key});
 
   @override
-  State<FarmerHomeScreen> createState() => _FarmerHomeScreenState();
+  State<MerchantHomeScreen> createState() => _MerchantHomeScreenState();
 }
 
-class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
+class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
   int index = 0;
 
   final screens = const [
-    CropsScreen(),
-    ScanScreen(),
     MarketScreen(),
+    HistoryScreen(),   
     AccountScreen(),
   ];
 
@@ -75,20 +73,16 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
               labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
               destinations: const [
                 NavigationDestination(
-                  icon: Icon(Icons.grass_outlined),
-                  selectedIcon: Icon(Icons.grass_rounded),
-                  label: "Crops",
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.camera_enhance_outlined),
-                  selectedIcon: Icon(Icons.camera_enhance),
-                  label: "Scan",
-                ),
-                NavigationDestination(
                   icon: Icon(Icons.shopping_bag_outlined),
                   selectedIcon: Icon(Icons.shopping_bag),
                   label: "Market",
                 ),
+             NavigationDestination(
+  icon: Icon(Icons.receipt_long),
+  selectedIcon: Icon(Icons.receipt_long_outlined),
+  label: "History",
+),
+               
                 NavigationDestination(
                   icon: Icon(Icons.person_outline),
                   selectedIcon: Icon(Icons.person),

@@ -9,6 +9,7 @@ import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/auth/login_screen.dart';
 import 'package:root2route/screens/farmer/farmer_home_screen.dart';
+import 'package:root2route/screens/merchant/merchant_home_screen.dart';
 
 class AddCompanyScreen extends StatefulWidget {
   const AddCompanyScreen({super.key});
@@ -347,6 +348,14 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                                     break;
                                   case AccountType
                                       .merchant:
+                                      Navigator
+                                        .pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            const MerchantHomeScreen(),
+                                      ),
+                                    );
                                   case AccountType
                                       .factory:
                                     Navigator
