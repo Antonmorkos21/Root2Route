@@ -17,30 +17,41 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      appBar: AppBar(
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 70,
+        backgroundColor: Colors.white,
+        title: const Text(
+          "History",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+      ),
+       backgroundColor: AppColors.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Row(
               children: [
-                Expanded(
-                  child: CustomSummaryCard(
-                    title: "Total Expenses",
-                    amount: "\$4,250.00",
-                    percentage: "-3.2%",
-                    color: Colors.red,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: CustomSummaryCard(
-                    title: "Total Revenue",
-                    amount: "\$6,800.00",
-                    percentage: "+8.2%",
-                    color: Colors.green,
-                  ),
-                ),
+            Expanded(
+  child: CustomSummaryCard(
+    title: "Total Purchases",
+    amount: "\$4,250",
+  ),
+),
+const SizedBox(width: 12),
+Expanded(
+  child: CustomSummaryCard(
+    title: "Total Sales",
+    amount: "\$6,800",
+  ),
+),
               ],
             ),
 
@@ -73,6 +84,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         child: Text(
                           "Purchases",
                           style: TextStyle(
+                            fontSize: 16,
                             fontWeight: FontWeight.w700,
                             color: isPurchasesSelected
                                 ? Colors.black
@@ -102,6 +114,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         child: Text(
                           "Sales",
                           style: TextStyle(
+                                                        fontSize: 16,
+
                             fontWeight: FontWeight.w700,
                             color: !isPurchasesSelected
                                 ? Colors.black

@@ -315,7 +315,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                             const SizedBox(height: 20),
                             CustomButton(
                               text:
-                                  'Register Company',
+                                  'Create  Company',
                               onPressed: () {
                                 if (!formKey
                                     .currentState!

@@ -6,11 +6,9 @@ class CustomSummaryCard extends StatelessWidget {
 
    final String title;
     final String amount;
-    final String percentage;
-    final Color color;
 
   const CustomSummaryCard({
-    super.key, required this.title, required this.amount, required this.percentage, required this.color,
+    super.key, required this.title, required this.amount,
     
   });
 
@@ -25,18 +23,15 @@ class CustomSummaryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(color: Colors.grey)),
-          const SizedBox(height: 8),
+          Text(title, style: const TextStyle(color: Colors.grey,fontSize: 16)),
+          const SizedBox(height: 14),
           Text(
             amount,
             style: const TextStyle(
                 fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 4),
-          Text(
-            percentage,
-            style: TextStyle(color: color),
-          ),
+                  const SizedBox(height: 10),
+
         ],
       ),
     );
