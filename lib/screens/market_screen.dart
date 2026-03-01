@@ -18,6 +18,8 @@ class _MarketScreenState extends State<MarketScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: AppColors.backgroundColor,
+
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,

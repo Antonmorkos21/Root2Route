@@ -21,6 +21,8 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor:AppColors.backgroundColor,
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -298,9 +300,13 @@ class _AccountScreenState extends State<AccountScreen> {
 
                 child: CustomButton(
                   text: 'Logout',
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                 onPressed: () {
+  Navigator.of(context).pushReplacement(
+    MaterialPageRoute(
+      builder: (context) => LoginScreen(),
+    ),
+  );
+},
                   color: Colors.red,
                 ),
               ),

@@ -41,11 +41,11 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AuthHeader(
-                    title: "زراعتك",
-                    description: "منصة الزراعة الذكية للمزارعين المصريين",
-                    icon: Icons.eco,
-                  ),
+                 AuthHeader(
+  title: "Welcome to Root2Route",
+  description: "Access your account to continue.",
+  icon: Icons.eco,
+),
                   const SizedBox(height: 16),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(18),
@@ -97,16 +97,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                       child: InkWell(
                                         borderRadius: BorderRadius.circular(12),
                                         onTap: () {
-                                          Navigator.pushNamed(
-                                            context,
-                                            RegisterScreen.id,
-                                          );
+                                          Navigator.pushNamed(context, RegisterScreen.id);
+
                                         },
                                         child: Container(
                                           height: 38,
                                           alignment: Alignment.center,
                                           child: const Text(
-                                            "New account  ",
+                                            "New account",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               color: Colors.white,
@@ -121,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(height: 14),
                               CustomTextFormField(
                                 icon: Icons.email_outlined,
-                                label: "Email Address  ",
+                                label: "Email Address",
                                 controller: emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
@@ -139,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(height: 15),
                               CustomTextFormField(
                                 icon: Icons.lock_outline,
-                                label: "Password  ",
+                                label: "Password",
                                 controller: passwordController,
                                 isPassword: true,
                                 validator: (value) {

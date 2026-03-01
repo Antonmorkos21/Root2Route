@@ -1,0 +1,143 @@
+import 'package:flutter/material.dart';
+import 'package:root2route/components/custom_merchant/custom_SummaryCard.dart';
+import 'package:root2route/core/theme/app_colors.dart';
+import 'package:root2route/screens/merchant/purchases_screen.dart';
+import 'package:root2route/screens/merchant/sales_screen.dart';
+
+class HistoryScreen extends StatefulWidget {
+  const HistoryScreen({super.key});
+
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends State<HistoryScreen> {
+  bool isPurchasesSelected = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: CustomSummaryCard(
+                    title: "Total Expenses",
+                    amount: "\$4,250.00",
+                    percentage: "-3.2%",
+                    color: Colors.red,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: CustomSummaryCard(
+                    title: "Total Revenue",
+                    amount: "\$6,800.00",
+                    percentage: "+8.2%",
+                    color: Colors.green,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
+            Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isPurchasesSelected = true;
+                        });
+                      },
+                      child: Container(
+                        height: 38,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: isPurchasesSelected
+                              ? Colors.white
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          "Purchases",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: isPurchasesSelected
+                                ? Colors.black
+                                : Colors.black54,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isPurchasesSelected = false;
+                        });
+                      },
+                      child: Container(
+                        height: 38,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: !isPurchasesSelected
+                              ? Colors.white
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          "Sales",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: !isPurchasesSelected
+                                ? Colors.black
+                                : Colors.black54,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Recent Activity",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Expanded(
+              child: isPurchasesSelected
+                  ? PurchasesScreen()
+                  : SalesScreen(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

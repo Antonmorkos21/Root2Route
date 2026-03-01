@@ -31,12 +31,12 @@ class AuthHeader extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           style: const TextStyle(
-            fontSize: 22,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 9),
         Text(
           description,
           textAlign: TextAlign.center,
