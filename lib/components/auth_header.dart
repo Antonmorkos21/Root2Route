@@ -16,34 +16,35 @@ class AuthHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          width: 70,
-          height: 70,
-          decoration: BoxDecoration(
-            color: const Color(0xFFEFFAF3),
-            borderRadius: BorderRadius.circular(20),
+        CircleAvatar(
+          radius: 38,
+          backgroundColor: Colors.white.withOpacity(0.15),
+          child: Icon(
+            icon,
+            size: 36,
+            color: AppColors.primary,
           ),
-          child: Icon(icon, size: 36, color: AppColors.primary),
         ),
-
-        const SizedBox(height: 25),
-
+        const SizedBox(height: 16),
         Text(
           title,
-          style: const TextStyle(fontSize: 22,color: AppColors.textPrimary, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
-
-        const SizedBox(height: 10),
-
+        const SizedBox(height: 6),
         Text(
           description,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: AppColors.textOnSecondary),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white.withOpacity(0.85),
+          ),
         ),
-
-        const SizedBox(height: 25),
       ],
     );
   }

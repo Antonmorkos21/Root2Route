@@ -20,18 +20,20 @@ class AccountTypeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         width: double.infinity,
         padding: EdgeInsets.all(AppSizes.paddingSize(context)),
         decoration: BoxDecoration(
-          color:
-              selected
-                  ? AppColors.primary.withOpacity(0.12)
-                  : AppColors.iconPrimary,
+          color: selected
+              ? AppColors.primary.withOpacity(0.18)
+              : Colors.white.withOpacity(0.08),
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: selected ? AppColors.primary : const Color(0xFFE3E3E3),
-            width: 2,
+            color: selected
+                ? AppColors.primary
+                : Colors.white.withOpacity(0.25),
+            width: 1.5,
           ),
         ),
         child: Column(
@@ -40,7 +42,9 @@ class AccountTypeButton extends StatelessWidget {
             Icon(
               icon,
               size: 26,
-              color: selected ? AppColors.primary : AppColors.iconSecondary,
+              color: selected
+                  ? AppColors.primary
+                  : Colors.white.withOpacity(0.85),
             ),
             const SizedBox(height: 6),
             FittedBox(
@@ -50,8 +54,9 @@ class AccountTypeButton extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12.5,
                   fontWeight: FontWeight.w600,
-                  color:
-                      selected ? AppColors.primary : AppColors.textOnSecondary,
+                  color: selected
+                      ? AppColors.primary
+                      : Colors.white.withOpacity(0.9),
                 ),
               ),
             ),
