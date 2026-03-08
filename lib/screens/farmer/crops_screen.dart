@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:root2route/components/custom_farmer/crop_card.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
-import 'package:root2route/screens/farmer/RequestProduct.dart';
 
 class CropsScreen extends StatefulWidget {
   const CropsScreen({super.key});
@@ -18,8 +17,6 @@ class _CropsScreenState extends State<CropsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
             backgroundColor: AppColors.backgroundColor,
-
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -116,30 +113,7 @@ class _CropsScreenState extends State<CropsScreen> {
           ),
         ],
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 16, right: 8),
-        child: FloatingActionButton(
-          backgroundColor: AppColors.primary,
-          shape: const CircleBorder(),
-          child: const Icon(Icons.add, color: AppColors.iconPrimary),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder:
-                  (_) => AlertDialog(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    contentPadding: EdgeInsets.all(
-                      16,
-                    ), 
-                    content: const RequestProduct(),
-                  ),
-            );
-          },
-        ),
-      ),
+      
     );
   }
 }

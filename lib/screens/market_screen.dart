@@ -3,7 +3,6 @@ import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/models/details_product_model.dart';
 import 'package:root2route/components/custom_product_card.dart';
-import 'package:root2route/screens/selling_crop_screen.dart';
 
 class MarketScreen extends StatefulWidget {
   const MarketScreen({super.key});
@@ -18,8 +17,7 @@ class _MarketScreenState extends State<MarketScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: AppColors.backgroundColor,
-
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -126,27 +124,6 @@ class _MarketScreenState extends State<MarketScreen> {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: AppColors.primary,
-        label: const Text(
-          "Selling ",
-          style: TextStyle(
-            color: AppColors.iconPrimary,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        icon: const Icon(Icons.add, color: AppColors.iconPrimary),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              // The builder function takes a BuildContext and returns the new screen's widget
-              builder: (context) => const SellingCropScreen(),
-            ),
-          );
-        },
       ),
     );
   }

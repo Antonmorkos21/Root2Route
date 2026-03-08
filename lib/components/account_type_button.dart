@@ -67,4 +67,4 @@ class AccountTypeButton extends StatelessWidget {
   }
 }
 
-enum AccountType { farmer, merchant, factory }
+enum AccountType { farmer, merchant, restaurant }

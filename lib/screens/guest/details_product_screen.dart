@@ -24,7 +24,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
         elevation: 0,
         leadingWidth: 70,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(top: 10, left: 16.0),
           child: CircleAvatar(
             backgroundColor: Colors.black26,
             child: IconButton(
@@ -39,7 +39,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: const EdgeInsets.only(top: 10, right: 16.0),
             child: Stack(
               alignment: Alignment.topRight,
               clipBehavior: Clip.none,

@@ -4,6 +4,7 @@ import 'package:root2route/core/theme/app_colors.dart';
 class CustomTextFormField extends StatefulWidget {
   final IconData icon;
   final String label;
+  final Color? color;
   final TextEditingController controller;
   final bool isPassword;
   final TextInputType? keyboardType;
@@ -21,6 +22,7 @@ class CustomTextFormField extends StatefulWidget {
     this.validator,
     this.isReadOnly = false,
     this.maxLines,
+      this.color,
   });
 
   @override
@@ -34,7 +36,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(    color: widget.color ?? Colors.white),
        obscureText: widget.isPassword ? obscureText : false,
       cursorColor: AppColors.primary,
       readOnly: widget.isReadOnly ?? false,

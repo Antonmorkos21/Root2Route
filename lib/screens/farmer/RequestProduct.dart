@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/components/auth_header.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:root2route/components/custom_button.dart';
-import 'package:root2route/components/custom_dialog.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
@@ -34,10 +34,37 @@ class _RequestProductState extends State<RequestProduct> {
               children: [
                 SizedBox(height: 5),
                 Center(
-                  child: AuthHeader(
-                    title: 'Request Crop',
-                    description: 'Send a request for a crop you need',
-                    icon: Icons.spa,
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 38,
+                        backgroundColor: Colors.white.withOpacity(0.15),
+                        child: Icon(
+                          Icons.spa,
+                          size: 36,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        "Request Crop",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ),
+                      const SizedBox(height: 9),
+                      Text(
+                        "Send a request for a crop you need",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: const Color.fromARGB(239, 0, 0, 0),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
@@ -54,9 +81,11 @@ class _RequestProductState extends State<RequestProduct> {
                 const SizedBox(height: 4),
 
                 CustomTextFormField(
+                  color: Colors.black,
                   icon: Icons.grass,
                   label: 'Example: cucumber, tomato',
                   controller: cropNameController,
+
                   validator: (v) {
                     if (v == null || v.isEmpty) {
                       return 'Enter crop name';
@@ -80,7 +109,14 @@ class _RequestProductState extends State<RequestProduct> {
                   decoration: InputDecoration(
                     hintText: 'Select crop type',
                     prefixIcon: Icon(Icons.spa, color: AppColors.iconSecondary),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primary,
+                        width: 2,
+                      ),
 
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -115,22 +151,12 @@ class _RequestProductState extends State<RequestProduct> {
                         onPressed: () {
                           if (!formKey.currentState!.validate()) return;
 
-                          showDialog(
+                          QuickAlert.show(
                             context: context,
-                            barrierDismissible: true,
-                            builder:
-                                (_) => CustomDialog(
-                                  title: 'Done!',
-                                  message:
-                                      'The request has been sent successfully',
-                                  icon: Icons.check_circle_rounded,
-                                  color: AppColors.primary,
-                                  buttonText: 'Continue',
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  },
-                                ),
+                            type: QuickAlertType.success,
+                            text: 'The request has been sent successfully',
+                            showConfirmBtn: false,
+                            autoCloseDuration: const Duration(seconds: 3),
                           );
                         },
                       ),

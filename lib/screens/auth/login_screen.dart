@@ -1,12 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:root2route/components/auth_header.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:root2route/components/custom_auth/auth_background.dart';
+import 'package:root2route/components/custom_auth/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
-import 'package:root2route/components/custom_dialog.dart';
-import 'package:root2route/components/custom_text_form_field.dart';
+ import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
-import 'package:root2route/core/theme/app_colors.dart';
-import 'package:root2route/screens/auth/forgot_password_screen.dart';
+ import 'package:root2route/screens/auth/forgot_password_screen.dart';
 import 'package:root2route/screens/auth/register_screen.dart';
 import 'package:root2route/screens/guest/products_screen.dart';
 
@@ -26,26 +27,19 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset("assets/images/3.jpg", fit: BoxFit.cover),
-          ),
-          Positioned.fill(
-            child: Container(color: Colors.black.withOpacity(0.50)),
-          ),
-          Center(
-            child: Padding(
-              padding: EdgeInsets.all(AppSizes.paddingSize(context)),
+      body: AuthBackground(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(AppSizes.paddingSize(context)),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                  AuthHeader(
-  title: "Welcome to Root2Route",
-  description: "Access your account to continue.",
-  icon: Icons.eco,
-),
+                        title: "Welcome to Root2Route",
+                        description: "Access your account to continue.",
+                        icon: Icons.eco,
+                      ),
                   const SizedBox(height: 16),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(18),
@@ -98,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         borderRadius: BorderRadius.circular(12),
                                         onTap: () {
                                           Navigator.pushNamed(context, RegisterScreen.id);
-
+                      
                                         },
                                         child: Container(
                                           height: 38,
@@ -172,24 +166,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 text: 'Login',
                                 onPressed: () {
                                   if (!formKey.currentState!.validate()) return;
-                                  showDialog(
-                                    context: context,
-                                    builder: (_) => CustomDialog(
-                                      title: 'Welcome!',
-                                      message: 'Logged in successfully',
-                                      icon: Icons.check_circle_rounded,
-                                      color: AppColors.primary,
-                                      buttonText: 'Continue',
-                                      onPressed: () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => productsScreen(),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
+                                  QuickAlert.show(
+                                     context: context,
+                                     type: QuickAlertType.success,
+                                     text: 'Transaction Completed Successfully!',
+                                     showConfirmBtn: false,);
+                                  Future.delayed(const Duration(seconds: 3), () {
+                                  Navigator.pushReplacement(context, 
+                                  MaterialPageRoute( builder: (_) => productsScreen(),),   );});
+                                
                                 },
                               ),
                             ],
@@ -203,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

@@ -63,8 +63,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Stack(
                   children: [
                     Container(
-                      width: 140,
-                      height: 140,
+                      width: 130,
+                      height: 130,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(color: AppColors.primary, width: 4),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/account_screen.dart';
+import 'package:root2route/screens/farmer/RequestProduct.dart';
 import 'package:root2route/screens/farmer/crops_screen.dart';
 import 'package:root2route/screens/market_screen.dart';
 import 'package:root2route/screens/farmer/scan_screen.dart';
+import 'package:root2route/screens/selling_crop_screen.dart';
 
 class FarmerHomeScreen extends StatefulWidget {
   const FarmerHomeScreen({super.key});
@@ -22,16 +24,59 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
     AccountScreen(),
   ];
 
+  Widget? funFab() {
+    switch (index) {
+      case 0:
+        return FloatingActionButton(
+          backgroundColor: AppColors.primary,
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add, color: AppColors.iconPrimary),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder:
+                  (_) => AlertDialog(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    contentPadding: const EdgeInsets.all(16),
+                    content: const RequestProduct(),
+                  ),
+            );
+          },
+        );
+
+      case 2:
+        return FloatingActionButton(
+          backgroundColor: AppColors.primary,
+          shape: const CircleBorder(),
+          child: const Icon(Icons.store, color: AppColors.iconPrimary),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SellingCropScreen(),
+              ),
+            );
+          },
+        );
+
+      default:
+        return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: AppColors.backgroundColor,
-
+      extendBody: true,
       body: screens[index],
+      floatingActionButton: funFab(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: Container(
         margin: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
         decoration: BoxDecoration(
-          color: AppColors.iconPrimary,
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
@@ -45,31 +90,37 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
           borderRadius: BorderRadius.circular(30),
           child: NavigationBarTheme(
             data: NavigationBarThemeData(
-              indicatorColor: AppColors.primary.withOpacity(0.2),
+              indicatorColor: AppColors.primary,
               labelTextStyle: WidgetStateProperty.resolveWith((states) {
                 if (states.contains(WidgetState.selected)) {
                   return const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
+                    color: AppColors.textSecondary,
                   );
                 }
-                return TextStyle(fontSize: 12, color: AppColors.iconSecondary);
+                return const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                );
               }),
               iconTheme: WidgetStateProperty.resolveWith((states) {
                 if (states.contains(WidgetState.selected)) {
                   return const IconThemeData(
-                    color: AppColors.primary,
+                    color: AppColors.iconPrimary,
                     size: 26,
                   );
                 }
-                return IconThemeData(color: AppColors.iconSecondary, size: 24);
+                return const IconThemeData(
+                  color: AppColors.iconPrimary,
+                  size: 24,
+                );
               }),
             ),
             child: NavigationBar(
               height: 65,
               elevation: 0,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.grey.withOpacity(0.80),
               selectedIndex: index,
               onDestinationSelected: (i) => setState(() => index = i),
               labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,

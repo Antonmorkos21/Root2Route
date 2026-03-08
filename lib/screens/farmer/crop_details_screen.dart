@@ -128,7 +128,7 @@ class _CropDetailsScreenState extends State<CropDetailsScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
+                                color: Colors.grey.shade300,
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Row(
@@ -174,7 +174,7 @@ class _CropDetailsScreenState extends State<CropDetailsScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
+                                color: Colors.grey.shade300,
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Row(

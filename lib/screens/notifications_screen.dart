@@ -20,14 +20,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back, color: AppColors.iconSecondary),
-        ),
+       
       ),
-      body: SingleChildScrollView(child: Container()),
+      body: Container(child: Center(child: Text("Empty")),),
     );
   }
 }

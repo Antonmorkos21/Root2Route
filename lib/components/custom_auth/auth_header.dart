@@ -42,7 +42,7 @@ class AuthHeader extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,
-            color: Colors.white.withOpacity(0.85),
+            color: const Color.fromARGB(240, 255, 255, 255),
           ),
         ),
       ],
