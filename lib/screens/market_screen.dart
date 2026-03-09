@@ -117,7 +117,6 @@ class _MarketScreenState extends State<MarketScreen> {
                     badgeText: 'Available',
                     badgeColor: AppColors.primary,
                     buttonText: 'Details',
-                    onPressed: () {},
                   ),
                 );
               },

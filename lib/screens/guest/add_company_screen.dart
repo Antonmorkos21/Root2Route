@@ -10,7 +10,7 @@ import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
- import 'package:root2route/screens/farmer/farmer_home_screen.dart';
+import 'package:root2route/screens/farmer/farmer_home_screen.dart';
 import 'package:root2route/screens/merchant/merchant_home_screen.dart';
 import 'package:root2route/screens/restaurant/restaurant_home_screen.dart';
 
@@ -46,13 +46,15 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: AuthBackground(
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(AppSizes.paddingSize(context)),
             child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(18),
                 child: BackdropFilter(
@@ -291,7 +293,6 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                                 context: context,
                                 type: QuickAlertType.success,
                                 text: "Company created successfully!",
-                                autoCloseDuration: const Duration(seconds: 3),
                                 showConfirmBtn: false,
                               );
 

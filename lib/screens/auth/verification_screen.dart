@@ -5,7 +5,7 @@ import 'package:root2route/components/custom_auth/auth_header.dart';
 import 'package:root2route/components/custom_auth/otp_field.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
-import 'package:root2route/screens/auth/re-enter_password_screen.dart';
+import 'package:root2route/screens/auth/create_new_password.dart';
 
 class VerificationScreen extends StatefulWidget {
   static const String id = '/VerificationScreen';
@@ -23,12 +23,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: AuthBackground(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(AppSizes.paddingSize(context)),
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
+              padding: EdgeInsets.all(AppSizes.paddingSize(context)),
+              child: SingleChildScrollView(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -65,7 +68,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               text: 'Verify',
                               onPressed: () => Navigator.pushReplacementNamed(
                                 context,
-                                ReEnterPasswordScreen.id,
+                                CreateNewPassword.id,
                               ),
                             ),
 

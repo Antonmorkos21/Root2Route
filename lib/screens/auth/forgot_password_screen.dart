@@ -19,17 +19,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: AuthBackground(
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(AppSizes.paddingSize(context)),
             child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

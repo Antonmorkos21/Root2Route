@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/components/custom_dialog.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/components/custom_auth/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
@@ -109,28 +110,22 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           onPressed: () {
                             if (!formKey.currentState!.validate()) return;
 
-                            showDialog(
+                            QuickAlert.show(
                               context: context,
-                              barrierDismissible: true,
-                              builder:
-                                  (_) => CustomDialog(
-                                    title: 'Done!',
-                                    message: 'Saved successfully 🎉',
-                                    icon: Icons.check_circle_rounded,
-                                    color: AppColors.primary,
-                                    buttonText: 'Continue',
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (_) => const FarmerHomeScreen(),
-                                        ),
-                                      );
-                                    },
-                                  ),
+                              type: QuickAlertType.success,
+                              text: "Saved successfully !",
+                              showConfirmBtn: false,
                             );
+
+                            Future.delayed(const Duration(seconds: 3), () {
+                              if (!context.mounted) return;
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => FarmerHomeScreen(),
+                                ),
+                              );
+                            });
                           },
                         ),
                       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:root2route/components/custom_button.dart';
-import 'package:root2route/components/custom_dialog.dart';
 import 'package:root2route/components/info_account_card.dart';
 import 'package:root2route/components/settings_account_card.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
@@ -21,7 +22,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor:AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
 
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -255,26 +256,23 @@ class _AccountScreenState extends State<AccountScreen> {
                                     color: Colors.red,
                                     onPressed: () {
                                       Navigator.pop(context);
-
-                                      showDialog(
+                                      QuickAlert.show(
                                         context: context,
-                                        barrierDismissible: true,
-                                        builder:
-                                            (_) => CustomDialog(
-                                              title: 'Done!',
-                                              message:
-                                                  'The account has been deleted',
-                                              icon: Icons.check_circle_rounded,
-                                              color: AppColors.primary,
-                                              buttonText: 'Continue',
-                                              onPressed: () {
-                                                Navigator.pushNamedAndRemoveUntil(
-                                                  context,
-                                                  LoginScreen.id,
-                                                  (route) => false,
-                                                );
-                                              },
-                                            ),
+                                        type: QuickAlertType.success,
+                                        text: "The account has been deleted",
+                                        showConfirmBtn: false,
+                                      );
+
+                                      Future.delayed(
+                                        const Duration(seconds: 3),
+                                        () {
+                                          if (!context.mounted) return;
+                                          Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            LoginScreen.id,
+                                            (route) => false,
+                                          );
+                                        },
                                       );
                                     },
                                   ),
@@ -300,13 +298,11 @@ class _AccountScreenState extends State<AccountScreen> {
 
                 child: CustomButton(
                   text: 'Logout',
-                 onPressed: () {
-  Navigator.of(context).pushReplacement(
-    MaterialPageRoute(
-      builder: (context) => LoginScreen(),
-    ),
-  );
-},
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
                   color: Colors.red,
                 ),
               ),

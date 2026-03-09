@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:root2route/components/custom_dialog.dart';
-import 'package:root2route/core/theme/app_colors.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
+ import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/components/custom_auth/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
@@ -21,6 +22,7 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -93,28 +95,22 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
                           onPressed: () {
                             if (!formKey.currentState!.validate()) return;
 
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder:
-                                  (_) => CustomDialog(
-                                    title: 'Done!',
-                                    message: 'Saved successfully 🎉',
-                                    icon: Icons.check_circle_rounded,
-                                    color: AppColors.primary,
-                                    buttonText: 'Continue',
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (_) => const FarmerHomeScreen(),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                            );
+
+                            QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.success,
+                                text: "Saved successfully !",
+                                showConfirmBtn: false,
+                              );
+
+                              Future.delayed(const Duration(seconds: 3), () {
+                                if (!context.mounted) return;
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => FarmerHomeScreen()),
+                                );
+                              });
+                            
                           },
                         ),
                       ),

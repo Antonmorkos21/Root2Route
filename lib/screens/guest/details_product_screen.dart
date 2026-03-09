@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/models/details_product_model.dart';
-import 'package:root2route/screens/guest/shopping_cart_screen.dart';
+import 'package:root2route/screens/guest/check_out_screen.dart';
+import 'package:root2route/screens/guest/shopping_screen.dart';
 
 class DetailsProductScreen extends StatefulWidget {
   final DetailsProductModel product;
-  int numproduct = 0;
 
-  DetailsProductScreen({super.key, required this.product});
+  const DetailsProductScreen({super.key, required this.product});
 
   @override
   State<DetailsProductScreen> createState() => _DetailsProductScreenState();
 }
 
 class _DetailsProductScreenState extends State<DetailsProductScreen> {
+  int numproduct = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
         elevation: 0,
         leadingWidth: 70,
         leading: Padding(
-          padding: const EdgeInsets.only(top: 10, left: 16.0),
+          padding: const EdgeInsets.only(top: 10, left: 16),
           child: CircleAvatar(
             backgroundColor: Colors.black26,
             child: IconButton(
@@ -37,9 +39,11 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
             ),
           ),
         ),
+
+        /// CART ICON
         actions: [
           Padding(
-            padding: const EdgeInsets.only(top: 10, right: 16.0),
+            padding: const EdgeInsets.only(top: 10, right: 16),
             child: Stack(
               alignment: Alignment.topRight,
               clipBehavior: Clip.none,
@@ -56,12 +60,14 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ShoppingCartScreen(),
+                          builder: (context) => const ShoppingScreen(),
                         ),
                       );
                     },
                   ),
                 ),
+
+                /// NUMBER ON CART
                 Positioned(
                   right: -2,
                   top: -2,
@@ -78,7 +84,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "${widget.numproduct}",
+                        "$numproduct",
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 10,
@@ -93,9 +99,13 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
           ),
         ],
       ),
+
       backgroundColor: Colors.white,
+
+      /// BODY
       body: Column(
         children: [
+          /// IMAGE
           Container(
             height: MediaQuery.of(context).size.height * 0.4,
             width: double.infinity,
@@ -106,10 +116,12 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
               ),
             ),
           ),
+
+          /// DETAILS
           Expanded(
             child: Container(
               transform: Matrix4.translationValues(0, -30, 0),
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(24),
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
@@ -119,6 +131,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    /// TITLE + QUANTITY
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -142,7 +155,10 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 12),
+
+                    /// LOCATION
                     Row(
                       children: [
                         const Icon(
@@ -160,7 +176,10 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 25),
+
+                    /// DESCRIPTION TITLE
                     const Text(
                       "Description",
                       style: TextStyle(
@@ -168,7 +187,10 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                     const SizedBox(height: 10),
+
+                    /// DESCRIPTION
                     Text(
                       widget.product.description,
                       style: TextStyle(
@@ -177,6 +199,7 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                         height: 1.6,
                       ),
                     ),
+
                     const SizedBox(height: 30),
                   ],
                 ),
@@ -185,6 +208,8 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
           ),
         ],
       ),
+
+      /// BOTTOM BAR
       bottomNavigationBar: Container(
         padding: const EdgeInsets.fromLTRB(24, 15, 24, 35),
         decoration: BoxDecoration(
@@ -199,8 +224,8 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
         ),
         child: Row(
           children: [
+            /// PRICE
             Expanded(
-              flex: 1,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,15 +248,17 @@ class _DetailsProductScreenState extends State<DetailsProductScreen> {
                 ],
               ),
             ),
+
             const SizedBox(width: 20),
+
             Expanded(
-              flex: 1,
               child: CustomButton(
                 text: "Order Now",
                 onPressed: () {
-                  setState(() {
-                    widget.numproduct = 1;
-                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => CheckoutScreen()),
+                  );
                 },
               ),
             ),

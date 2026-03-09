@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/account_screen.dart';
- import 'package:root2route/screens/market_screen.dart';
+import 'package:root2route/screens/market_screen.dart';
 import 'package:root2route/screens/merchant/history_screen.dart';
 import 'package:root2route/screens/selling_crop_screen.dart';
 
@@ -21,6 +21,7 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+      extendBody: true,
 
       body: screens[index],
       bottomNavigationBar: Container(
@@ -40,31 +41,37 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
           borderRadius: BorderRadius.circular(30),
           child: NavigationBarTheme(
             data: NavigationBarThemeData(
-              indicatorColor: AppColors.primary.withOpacity(0.2),
+              indicatorColor: AppColors.primary,
               labelTextStyle: WidgetStateProperty.resolveWith((states) {
                 if (states.contains(WidgetState.selected)) {
                   return const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
+                    color: AppColors.textSecondary,
                   );
                 }
-                return TextStyle(fontSize: 12, color: AppColors.iconSecondary);
+                return const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                );
               }),
               iconTheme: WidgetStateProperty.resolveWith((states) {
                 if (states.contains(WidgetState.selected)) {
                   return const IconThemeData(
-                    color: AppColors.primary,
+                    color: AppColors.iconPrimary,
                     size: 26,
                   );
                 }
-                return IconThemeData(color: AppColors.iconSecondary, size: 24);
+                return const IconThemeData(
+                  color: AppColors.iconPrimary,
+                  size: 24,
+                );
               }),
             ),
             child: NavigationBar(
               height: 65,
               elevation: 0,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.grey.withOpacity(0.99),
               selectedIndex: index,
               onDestinationSelected: (i) => setState(() => index = i),
               labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
@@ -90,23 +97,23 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
           ),
         ),
       ),
-      
-floatingActionButton: index == 0
-    ? FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        shape: const CircleBorder(),
-         child: const Icon(Icons.store, color: AppColors.iconPrimary),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SellingCropScreen(),
-              ),
-            );
-          },
-      )
-    : null,
+
+      floatingActionButton:
+          index == 0
+              ? FloatingActionButton(
+                backgroundColor: AppColors.primary,
+                shape: const CircleBorder(),
+                child: const Icon(Icons.store, color: AppColors.iconPrimary),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SellingCropScreen(),
+                    ),
+                  );
+                },
+              )
+              : null,
     );
-    
   }
 }

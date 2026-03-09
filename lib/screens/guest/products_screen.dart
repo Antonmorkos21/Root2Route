@@ -5,14 +5,14 @@ import 'package:root2route/models/details_product_model.dart';
 import 'package:root2route/screens/guest/add_company_screen.dart';
 import 'package:root2route/components/custom_product_card.dart';
 
-class productsScreen extends StatefulWidget {
-  const productsScreen({super.key});
+class ProductsScreen extends StatefulWidget {
+  const ProductsScreen({super.key});
 
   @override
-  State<productsScreen> createState() => _productsScreenState();
+  State<ProductsScreen> createState() => _ProductsScreenState();
 }
 
-class _productsScreenState extends State<productsScreen> {
+class _ProductsScreenState extends State<ProductsScreen> {
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -153,7 +153,6 @@ class _productsScreenState extends State<productsScreen> {
                     badgeText: 'Available',
                     badgeColor: AppColors.primary,
                     buttonText: 'Details',
-                    onPressed: () {},
                   ),
                 );
               },

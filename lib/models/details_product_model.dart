@@ -10,7 +10,6 @@ class DetailsProductModel {
   final String badgeText;
   final String buttonText;
   final Color badgeColor;
-  final VoidCallback onPressed;
   DetailsProductModel({
     required this.imagePath,
     required this.title,
@@ -21,6 +20,5 @@ class DetailsProductModel {
     required this.badgeText,
     required this.badgeColor,
     required this.buttonText,
-     required this.onPressed,
   });
 }
