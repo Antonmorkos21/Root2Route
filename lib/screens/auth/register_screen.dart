@@ -8,7 +8,10 @@ import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
+import 'package:root2route/models/user_model.dart';
+import 'package:root2route/screens/auth/configuration_screen.dart';
 import 'package:root2route/screens/auth/login_screen.dart';
+import 'package:root2route/services/api.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = '/registerScreen';
@@ -19,13 +22,15 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final emailController = TextEditingController();
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final addressController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  // Register Form
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  ApiService api = ApiService();
 
   @override
   Widget build(BuildContext context) {
@@ -225,27 +230,86 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 const SizedBox(height: 16),
                                 CustomButton(
                                   text: 'Register',
-                                  onPressed: () {
-                                    if (!formKey.currentState!.validate())
-                                      return;
-                                    QuickAlert.show(
-                                      context: context,
-                                      type: QuickAlertType.success,
-                                      text:
-                                          'Registration successful! Please log in to continue.',
-                                      showConfirmBtn: false,
-                                    );
-                                    Future.delayed(
-                                      const Duration(seconds: 3),
-                                      () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => LoginScreen(),
+                                  onPressed: () async {
+                                    if (formKey.currentState!.validate()) {
+                                      // 1. إظهار الـ Loading
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible:
+                                            false, // يمنع المستخدم من إغلاق التحميل بالضغط خارج النافذة
+                                        builder:
+                                            (context) => const Center(
+                                              child:
+                                                  CircularProgressIndicator(), // شكل التحميل الدائري
+                                            ),
+                                      );
+
+                                      try {
+                                        // 2. طلب الـ API
+                                        await api.registerUser(
+                                          UserModel(
+                                            fullName: nameController.text,
+                                            address: addressController.text,
+                                            email: emailController.text,
+                                            password: passwordController.text,
+                                            confirmPassword:
+                                                confirmPasswordController.text,
+                                            phoneNumber: phoneController.text,
                                           ),
                                         );
-                                      },
-                                    );
+
+                                        // 3. إغلاق الـ Loading (مهم جداً!)
+                                        if (context.mounted)
+                                          Navigator.pop(context);
+
+                                        // 4. إظهار رسالة النجاح
+                                        QuickAlert.show(
+                                          context: context,
+                                          type: QuickAlertType.success,
+                                          text:
+                                              'Registration successful! Please log in to continue.',
+                                          autoCloseDuration: const Duration(
+                                            seconds: 3,
+                                          ), // يغلق التنبيه تلقائياً
+                                          showConfirmBtn: false,
+                                        );
+
+                                        // 5. الانتقال لصفحة اللوجن
+                                        Future.delayed(
+                                          const Duration(seconds: 3),
+                                          () {
+                                            if (context.mounted) {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (context) =>
+                                                          ConfigurationScreen(
+                                                            email:
+                                                                emailController
+                                                                    .text,
+                                                          ),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        );
+                                      } catch (e) {
+                                        // إغلاق الـ Loading
+                                        if (context.mounted)
+                                          Navigator.pop(context);
+
+                                        // إظهار رسالة الخطأ الحقيقية
+                                        QuickAlert.show(
+                                          context: context,
+                                          type: QuickAlertType.error,
+                                          text: e.toString().replaceAll(
+                                            'Exception: ',
+                                            '',
+                                          ), // هنا سيظهر السبب الفعلي
+                                        );
+                                      }
+                                    }
                                   },
                                 ),
                                 const SizedBox(height: 10),

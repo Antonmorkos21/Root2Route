@@ -1,38 +1,40 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:root2route/core/api/dio_consumer.dart';
-import 'package:root2route/cubits/user_cubit.dart';
-import 'package:root2route/screens/auth/forgot_password_screen.dart';
-import 'package:root2route/screens/auth/login_screen.dart';
-import 'package:root2route/screens/auth/verification_screen.dart';
 import 'package:root2route/screens/auth/create_new_password.dart';
+import 'package:root2route/screens/auth/forgot_password_screen.dart';
 import 'package:root2route/screens/auth/register_screen.dart';
+import 'package:root2route/screens/auth/recovery_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:root2route/screens/auth/login_screen.dart';
+import 'package:root2route/screens/guest/products_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  final String? token = prefs.getString('auth_token');
+
   runApp(
-    BlocProvider(
-      create: (context) => UserCubit(api: DioConsumer(dio: Dio())),
-      child: const MyApp(),
-    ),
+    MyApp(startScreen: token != null ? ProductsScreen.id : LoginScreen.id),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String startScreen;
+  const MyApp({super.key, required this.startScreen});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: false),
-      initialRoute: LoginScreen.id,
+      initialRoute: startScreen,
       routes: {
         LoginScreen.id: (_) => const LoginScreen(),
         RegisterScreen.id: (_) => const RegisterScreen(),
         ForgotPasswordScreen.id: (_) => const ForgotPasswordScreen(),
-        VerificationScreen.id: (_) => const VerificationScreen(),
+        RecoveryScreen.id: (_) => const RecoveryScreen(),
         CreateNewPassword.id: (_) => const CreateNewPassword(),
+        ProductsScreen.id: (_) => const ProductsScreen(),
       },
     );
   }

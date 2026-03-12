@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/models/details_product_model.dart';
+import 'package:root2route/screens/auth/login_screen.dart';
 import 'package:root2route/screens/guest/add_company_screen.dart';
 import 'package:root2route/components/custom_product_card.dart';
+import 'package:root2route/services/api.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
+
+  static const String id = 'Products_screen';
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
@@ -19,6 +23,22 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.login, color: Colors.black),
+          onPressed: () async {
+            // 1. استدعاء دالة المسح من الـ API
+            await ApiService().logout();
+
+            if (context.mounted) {
+              // 2. التوجيه لصفحة الـ Login ومسح كل الصفحات اللي فاتت من الـ Stack
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                LoginScreen.id, // تأكد من اسم الـ ID لصفحة الـ Login
+                (route) => false, // هذا السطر يمنع الرجوع للخلف
+              );
+            }
+          },
+        ),
         elevation: 0,
         automaticallyImplyLeading: false,
         toolbarHeight: 70,
