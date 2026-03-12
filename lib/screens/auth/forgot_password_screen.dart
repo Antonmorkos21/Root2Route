@@ -5,7 +5,7 @@ import 'package:root2route/components/custom_auth/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
-import 'package:root2route/screens/auth/verification_screen.dart';
+import 'package:root2route/screens/auth/recovery_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   static const String id = '/ForgotPasswordScreen';
@@ -86,7 +86,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   if (!formKey.currentState!.validate()) return;
                                   Navigator.pushNamed(
                                     context,
-                                    VerificationScreen.id,
+                                    RecoveryScreen.id,
                                   );
                                 },
                               ),

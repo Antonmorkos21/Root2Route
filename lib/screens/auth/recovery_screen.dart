@@ -7,17 +7,17 @@ import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/screens/auth/create_new_password.dart';
 
-class VerificationScreen extends StatefulWidget {
+class RecoveryScreen extends StatefulWidget {
   static const String id = '/VerificationScreen';
-  const VerificationScreen({super.key});
+  const RecoveryScreen({super.key});
 
   @override
-  State<VerificationScreen> createState() => _VerificationScreenState();
+  State<RecoveryScreen> createState() => _RecoveryScreenState();
 }
 
-class _VerificationScreenState extends State<VerificationScreen> {
+class _RecoveryScreenState extends State<RecoveryScreen> {
   static const Color green = Color(0xFF2ECC71);
-
+  String otpCode = "";
   int secondsLeft = 30;
 
   @override
@@ -27,11 +27,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
       body: AuthBackground(
         child: Center(
           child: Padding(
-              padding: EdgeInsets.all(AppSizes.paddingSize(context)),
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom,
-                ),
+            padding: EdgeInsets.all(AppSizes.paddingSize(context)),
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -61,15 +61,33 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             const SizedBox(height: 10),
-                            OtpField(),
+                            OtpField(
+                              onChanged: (value) {
+                                otpCode = value;
+                              },
+                            ),
                             const SizedBox(height: 26),
 
                             CustomButton(
                               text: 'Verify',
-                              onPressed: () => Navigator.pushReplacementNamed(
-                                context,
-                                CreateNewPassword.id,
-                              ),
+                              onPressed: () {
+                                if (otpCode.length == 6) {
+                                  print("Verifying with code: $otpCode");
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    CreateNewPassword.id,
+                                  );
+                                } else {
+                                  // إظهار رسالة تنبيه أن الكود غير مكتمل
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Please enter the full 4-digit code",
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
                             ),
 
                             const SizedBox(height: 16),
