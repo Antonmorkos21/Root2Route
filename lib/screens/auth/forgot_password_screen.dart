@@ -1,11 +1,14 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:root2route/components/custom_auth/auth_background.dart';
 import 'package:root2route/components/custom_auth/auth_header.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/screens/auth/recovery_screen.dart';
+import 'package:root2route/services/api.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   static const String id = '/ForgotPasswordScreen';
@@ -80,14 +83,77 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 },
                               ),
                               const SizedBox(height: 25),
+
                               CustomButton(
-                                text: 'Send Reset Link',
-                                onPressed: () {
+                                text: 'Send verification code',
+                                onPressed: () async {
                                   if (!formKey.currentState!.validate()) return;
-                                  Navigator.pushNamed(
-                                    context,
-                                    RecoveryScreen.id,
+                                  QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.loading,
+                                    title: 'Please Wait',
+                                    text: 'Sending verification code...',
+                                    barrierDismissible: false,
                                   );
+
+                                  try {
+                                    final result = await ApiService()
+                                        .forgetPassword(emailController.text);
+
+                                    // 2. Close Loading Alert
+                                    Navigator.pop(context);
+
+                                    if (result['success']) {
+                                      // 3. Show Success Alert
+                                      // 1. إظهار الـ Alert
+                                      QuickAlert.show(
+                                        context: context,
+                                        type: QuickAlertType.success,
+                                        title: 'Success',
+                                        text:
+                                            "Verification code sent to your email address",
+                                        showConfirmBtn:
+                                            false, // اختياري: لو عايز تخفي الزرار خالص بما إنه هينقل لوحده
+                                      );
+
+                                      // 2. الانتظار لمدة 3 ثواني ثم التنفيذ
+                                      Future.delayed(
+                                        const Duration(seconds: 3),
+                                        () {
+                                          if (mounted) {
+                                            // إغلاق الـ Alert أولاً
+                                            Navigator.pop(context);
+
+                                            // الانتقال للصفحة التالية
+                                            Navigator.pushNamed(
+                                              context,
+                                              RecoveryScreen.id,
+                                              arguments: emailController.text,
+                                            );
+                                          }
+                                        },
+                                      );
+                                    } else {
+                                      // 4. Show Error Alert (e.g., Email not found)
+                                      QuickAlert.show(
+                                        context: context,
+                                        type: QuickAlertType.error,
+                                        title: 'Oops...',
+                                        text:
+                                            result['message'], // This will show the server error in English
+                                        confirmBtnText: 'Try Again',
+                                      );
+                                    }
+                                  } catch (e) {
+                                    Navigator.pop(context); // Close Loading
+                                    QuickAlert.show(
+                                      context: context,
+                                      type: QuickAlertType.error,
+                                      title: 'Error',
+                                      text:
+                                          'Something went wrong. Please check your connection.',
+                                    );
+                                  }
                                 },
                               ),
                             ],

@@ -10,8 +10,8 @@ import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/screens/auth/configuration_screen.dart';
 import 'package:root2route/screens/auth/forgot_password_screen.dart';
 import 'package:root2route/screens/auth/register_screen.dart';
-import 'package:root2route/screens/guest/products_screen.dart';
-import 'package:root2route/services/api.dart';
+import 'package:root2route/screens/guest/guest_home_screen.dart';
+ import 'package:root2route/services/api.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = '/loginScreen';
@@ -184,7 +184,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ForgotPasswordScreen.id,
                                       );
                                     },
-                                    child: const Text("Forgot password?"),
+                                    child: const Text(
+                                      "Forgot password?",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
                                 ),
 
@@ -194,8 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   text: 'Login',
                                   onPressed: () async {
                                     if (formKey.currentState!.validate()) {
-                                      // 1. إظهار الـ Loading
-                                      showDialog(
+                                       showDialog(
                                         context: context,
                                         barrierDismissible: false,
                                         builder:
@@ -218,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         if (context.mounted) {
                                           Navigator.pushReplacementNamed(
                                             context,
-                                            ProductsScreen.id,
+                                            GuestHomeScreen.id,
                                           );
                                         }
                                       } catch (e) {

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:root2route/core/constants.dart';
 import 'package:root2route/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,22 +7,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ApiService {
   static final ApiService _instance = ApiService._internal();
   factory ApiService() => _instance;
-  ApiService._internal();
 
-  String? _tempToken; //تخزين التوكن ف الزاكره
-
-  final Dio _dio = Dio(
-    BaseOptions(
+  final Dio _dio = Dio();
+  final String _defaultOrgId = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
+  String? _tempToken;
+  ApiService._internal() {
+    _dio.options = BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "X-Organization-Id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      },
-    ),
-  );
+    );
+
+    _dio.interceptors.add(
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        logPrint: (obj) => debugPrint(obj.toString()),
+      ),
+    );
+  }
 
   Future<void> registerUser(UserModel user) async {
     try {
@@ -34,16 +38,16 @@ class ApiService {
     } on DioException catch (e) {
       if (e.response != null) {
         print("Server Error (${e.response?.statusCode}): ${e.response?.data}");
-      
+
         dynamic data = e.response?.data;
         String message = "Something went wrong";
-      
+
         if (data is Map) {
           message = data['message'] ?? data['msg'] ?? "Error occurred";
         } else if (data is String) {
           message = data;
         }
-      
+
         throw Exception(message);
       } else {
         throw Exception("No Internet Connection");
@@ -73,16 +77,16 @@ class ApiService {
       }
       if (e.response != null) {
         print("Server Error (${e.response?.statusCode}): ${e.response?.data}");
-      
+
         dynamic data = e.response?.data;
         String message = "Something went wrong";
-      
+
         if (data is Map) {
           message = data['message'] ?? data['msg'] ?? "Error occurred";
         } else if (data is String) {
           message = data;
         }
-      
+
         throw Exception(message);
       } else {
         throw Exception("No Internet Connection");
@@ -92,63 +96,81 @@ class ApiService {
     }
   }
 
-  Future<void> verifyOTP({
+  Future<void> resendOTP({required String email}) async {
+    try {
+      await _dio.post('/auth/resend-otp', data: {"email": email});
+    } catch (e) {
+      throw Exception("Failed to resend code");
+    }
+  }
+
+  Future<Map<String, dynamic>> verifyOTP({
     required String email,
     required String otpCode,
   }) async {
     try {
       final response = await _dio.post(
         '/auth/verify-otp',
-        data: {"email": email, "otp": otpCode},
+        data: {
+          "email": email.trim(),
+          "otp": otpCode.trim(), // جرب تبعته String زي الـ Schema بالظبط
+        },
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "X-Organization-Id": _defaultOrgId,
+          },
+        ),
       );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final prefs = await SharedPreferences.getInstance();
-
-        if (response.data['data'] != null &&
-            response.data['data']['token'] != null) {
-          await prefs.setString('auth_token', response.data['data']['token']);
-          _tempToken = null;
-        } else if (_tempToken != null) {
-          await prefs.setString('auth_token', _tempToken!);
-          _tempToken = null;
-        }
-        print("OTP Verified & Token Saved!");
-      }
+      return {"success": true, "message": "Success"};
     } on DioException catch (e) {
-      String errorMsg = "كود التحقق غير صحيح";
-
-      if (e.response?.data is Map) {
-        errorMsg = e.response?.data['message'] ?? errorMsg;
-      } else if (e.response?.data is String) {
-        errorMsg = e.response?.data;
-      }
-
-      if (e.response != null) {
-        print("Server Error (${e.response?.statusCode}): ${e.response?.data}");
-      
-        dynamic data = e.response?.data;
-        String message = "Something went wrong";
-      
-        if (data is Map) {
-          message = data['message'] ?? data['msg'] ?? "Error occurred";
-        } else if (data is String) {
-          message = data;
-        }
-      
-        throw Exception(message);
-      } else {
-        throw Exception("No Internet Connection");
-      }
-      throw Exception(errorMsg);
+      debugPrint("🛑 Error Data: ${e.response?.data}");
+      return {
+        "success": false,
+        "message": e.response?.data['message'] ?? "Invalid OTP",
+      };
     }
   }
 
-  Future<void> resendOTP({required String email}) async {
+  Future<Map<String, dynamic>> forgetPassword(String email) async {
     try {
-      await _dio.post('/auth/resend-otp', data: {"email": email});
-    } catch (e) {
-      throw Exception("Failed to resend code");
+      // طباعة للإيميل قبل ما يتبعت عشان تتأكد إنه نظيف
+      debugPrint("📧 Requesting OTP for: '${email.trim()}'");
+
+      final response = await _dio.post(
+        '/auth/forget-password',
+        data: {
+          "email":
+              email
+                  .trim()
+                  .toLowerCase(), // تأكدنا إن الـ lowercase بيفرق مع السيرفرات
+        },
+        options: Options(
+          headers: {
+            "X-Organization-Id": _defaultOrgId, // الـ ID اللي ثبتناه
+            "Content-Type": "application/json",
+          },
+        ),
+      );
+
+      // لو الرد نجح (Status 200/201)
+      return {
+        "success": true,
+        "message": response.data['message'] ?? "تم إرسال كود التحقق بنجاح",
+      };
+    } on DioException catch (e) {
+      // هنا بنعرف السيرفر زعلان من إيه (مثلاً الإيميل مش موجود)
+      String errorMsg = "فشل إرسال الكود";
+
+      if (e.response?.data is Map) {
+        // لو السيرفر بعت رسالة زي "User not found"
+        errorMsg = e.response?.data['message'] ?? errorMsg;
+      }
+
+      debugPrint("🛑 Forget Password Server Error: ${e.response?.data}");
+      return {"success": false, "message": errorMsg};
+    } catch (err) {
+      return {"success": false, "message": "حدث خطأ غير متوقع: $err"};
     }
   }
 
@@ -161,6 +183,3 @@ class ApiService {
     print("User logged out and token cleared.");
   }
 }
-
-
-

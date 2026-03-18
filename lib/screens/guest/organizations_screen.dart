@@ -14,14 +14,14 @@ import 'package:root2route/screens/farmer/farmer_home_screen.dart';
 import 'package:root2route/screens/merchant/merchant_home_screen.dart';
 import 'package:root2route/screens/restaurant/restaurant_home_screen.dart';
 
-class AddCompanyScreen extends StatefulWidget {
-  const AddCompanyScreen({super.key});
+class OrganizationsScreen extends StatefulWidget {
+  const OrganizationsScreen({super.key});
 
   @override
-  State<AddCompanyScreen> createState() => _AddCompanyScreenState();
+  State<OrganizationsScreen> createState() => _OrganizationsScreenState();
 }
 
-class _AddCompanyScreenState extends State<AddCompanyScreen> {
+class _OrganizationsScreenState extends State<OrganizationsScreen> {
   final emailController = TextEditingController();
   final nameController = TextEditingController();
   final phoneController = TextEditingController();

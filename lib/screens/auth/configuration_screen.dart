@@ -7,6 +7,8 @@ import 'package:root2route/components/custom_auth/otp_field.dart';
 import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:root2route/core/theme/app_colors.dart';
+import 'package:root2route/screens/guest/guest_home_screen.dart';
 import 'package:root2route/screens/guest/products_screen.dart';
 import 'package:root2route/services/api.dart';
 
@@ -72,7 +74,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
           onConfirmBtnTap: () {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              ProductsScreen.id,
+              GuestHomeScreen.id,
               (route) => false,
             );
           },
@@ -148,7 +150,6 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                                 ),
                             const SizedBox(height: 16),
 
-                            // --- الجزء الخاص بالـ Resend Code ---
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -168,7 +169,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                                       setState(() => _startTimer());
                                     },
                                     style: TextButton.styleFrom(
-                                      foregroundColor: green,
+                                      foregroundColor: AppColors.primary,
                                     ),
                                     child: const Text('Resend'),
                                   ),
