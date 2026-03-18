@@ -17,11 +17,13 @@ class RecoveryScreen extends StatefulWidget {
 
 class _RecoveryScreenState extends State<RecoveryScreen> {
   static const Color green = Color(0xFF2ECC71);
-  String otpCode = "";
+  dynamic otpCode;
   int secondsLeft = 30;
+  String email = "";
 
   @override
   Widget build(BuildContext context) {
+    email = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: AuthBackground(
@@ -73,9 +75,14 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                               onPressed: () {
                                 if (otpCode.length == 6) {
                                   print("Verifying with code: $otpCode");
-                                  Navigator.pushReplacementNamed(
+                                  Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     CreateNewPassword.id,
+                                    (route) => false,
+                                    arguments: {
+                                      "email": email,
+                                      "code": otpCode,
+                                    },
                                   );
                                 } else {
                                   // إظهار رسالة تنبيه أن الكود غير مكتمل

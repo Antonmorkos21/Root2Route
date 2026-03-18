@@ -6,6 +6,7 @@ import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/screens/auth/login_screen.dart';
+import 'package:root2route/services/api.dart';
 
 class CreateNewPassword extends StatefulWidget {
   static const String id = '/re-enter-passwordScreen';
@@ -20,19 +21,25 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
   final confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+  String email = '';
+  dynamic otp;
+  dynamic data;
 
   @override
   Widget build(BuildContext context) {
+    data = ModalRoute.of(context)!.settings.arguments;
+    email = data['email'];
+    otp = data['otp'];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: AuthBackground(
         child: Center(
           child: Padding(
-              padding: EdgeInsets.all(AppSizes.paddingSize(context)),
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom,
-                ),
+            padding: EdgeInsets.all(AppSizes.paddingSize(context)),
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -101,7 +108,11 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
                                 text: "Reset Password",
                                 onPressed: () {
                                   if (!formKey.currentState!.validate()) return;
-
+                                  ApiService().resetPassword(
+                                    email: email,
+                                    otp: otp.toString(),
+                                    newPassword: passwordController.text,
+                                  );
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     LoginScreen.id,
@@ -115,7 +126,6 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),

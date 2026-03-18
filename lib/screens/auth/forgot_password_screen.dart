@@ -125,9 +125,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                             Navigator.pop(context);
 
                                             // الانتقال للصفحة التالية
-                                            Navigator.pushNamed(
+                                            Navigator.pushNamedAndRemoveUntil(
                                               context,
                                               RecoveryScreen.id,
+                                              (route) => false,
                                               arguments: emailController.text,
                                             );
                                           }

@@ -174,6 +174,45 @@ class ApiService {
     }
   }
 
+  Future<Map<String, dynamic>> resetPassword({
+    required String email,
+    required String otp,
+    required String newPassword,
+  }) async {
+    try {
+      final response = await _dio.post(
+        '/auth/reset-password',
+        data: {
+          "email": email.trim().toLowerCase(),
+          "otp": otp.trim(),
+          "newPassword": newPassword,
+        },
+        options: Options(
+          headers: {
+            "X-Organization-Id": _defaultOrgId,
+            "Content-Type": "application/json",
+          },
+        ),
+      );
+
+      return {
+        "success": true,
+        "message": response.data['message'] ?? "تم تغيير كلمة المرور بنجاح",
+      };
+    } on DioException catch (e) {
+      String errorMsg = "فشل تغيير كلمة المرور";
+
+      if (e.response?.data is Map) {
+        errorMsg = e.response?.data['message'] ?? errorMsg;
+      }
+
+      debugPrint("🛑 Reset Password Error: ${e.response?.data}");
+      return {"success": false, "message": errorMsg};
+    } catch (err) {
+      return {"success": false, "message": "حدث خطأ غير متوقع: $err"};
+    }
+  }
+
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('auth_token');
