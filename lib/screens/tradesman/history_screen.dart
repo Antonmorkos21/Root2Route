@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/components/custom_merchant/custom_SummaryCard.dart';
 import 'package:root2route/core/theme/app_colors.dart';
-import 'package:root2route/screens/merchant/purchases_screen.dart';
-import 'package:root2route/screens/merchant/sales_screen.dart';
+import 'package:root2route/screens/tradesman/purchases_screen.dart';
+import 'package:root2route/screens/tradesman/sales_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});

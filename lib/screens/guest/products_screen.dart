@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/models/details_product_model.dart';
-import 'package:root2route/screens/auth/login_screen.dart';
-import 'package:root2route/screens/guest/organizations_screen.dart';
+ import 'package:root2route/screens/guest/organizations_screen.dart';
 import 'package:root2route/components/custom_product_card.dart';
-import 'package:root2route/services/api.dart';
-
+ 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
 
@@ -55,7 +53,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   },
                   icon: const Icon(Icons.add_business_outlined, size: 20),
                   label: const Text(
-                    "Add Company",
+                    "Organization",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   style: ElevatedButton.styleFrom(

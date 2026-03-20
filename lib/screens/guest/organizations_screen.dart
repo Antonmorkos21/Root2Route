@@ -10,8 +10,9 @@ import 'package:root2route/components/custom_button.dart';
 import 'package:root2route/components/custom_text_form_field.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
+import 'package:root2route/screens/factory/factory_home_screen.dart';
 import 'package:root2route/screens/farmer/farmer_home_screen.dart';
-import 'package:root2route/screens/merchant/merchant_home_screen.dart';
+import 'package:root2route/screens/tradesman/tradesman_home_screen.dart';
 import 'package:root2route/screens/restaurant/restaurant_home_screen.dart';
 
 class OrganizationsScreen extends StatefulWidget {
@@ -210,20 +211,7 @@ class _OrganizationsScreenState extends State<OrganizationsScreen> {
                                 ),
                               ),
                               const SizedBox(width: 11),
-                              Expanded(
-                                child: AccountTypeButton(
-                                  text: 'Merchant',
-                                  icon: Icons.storefront_outlined,
-                                  selected:
-                                      selectedType == AccountType.merchant,
-                                  onTap:
-                                      () => setState(() {
-                                        selectedType = AccountType.merchant;
-                                      }),
-                                ),
-                              ),
-                              const SizedBox(width: 11),
-                              Expanded(
+                               Expanded(
                                 child: AccountTypeButton(
                                   text: 'Restaurant',
                                   icon: Icons.fastfood,
@@ -236,6 +224,34 @@ class _OrganizationsScreenState extends State<OrganizationsScreen> {
                                       }),
                                 ),
                               ),
+                              const SizedBox(width: 11),
+                              Expanded(
+                             
+                                child: AccountTypeButton(
+                                  text: 'factory',
+                                  icon: Icons.factory_outlined,
+                                  selected:
+                                      selectedType == AccountType.factory,
+                                  onTap:
+                                      () => setState(() {
+                                        selectedType = AccountType.factory;
+                                      }),
+                                ),
+                              ),
+                              const SizedBox(width: 11),
+                              Expanded(
+                                child: AccountTypeButton(
+                                  text: 'Tradesman',
+                                  icon: Icons.storefront_outlined,
+                                  selected:
+                                      selectedType == AccountType.tradesman,
+                                  onTap:
+                                      () => setState(() {
+                                        selectedType = AccountType.tradesman;
+                                      }),
+                                ),
+                              ),
+                              const SizedBox(width: 11),
                             ],
                           ),
 
@@ -280,12 +296,15 @@ class _OrganizationsScreenState extends State<OrganizationsScreen> {
                                   target = const FarmerHomeScreen();
                                   break;
 
-                                case AccountType.merchant:
-                                  target = const MerchantHomeScreen();
-                                  break;
-
                                 case AccountType.restaurant:
                                   target = const RestaurantHomeScreen();
+                                  break;
+
+                                case AccountType.factory:
+                                  target = const FactoryHomeScreen();
+                                  break;
+                                case AccountType.tradesman:
+                                  target = const TradesmanHomeScreen();
                                   break;
                               }
 

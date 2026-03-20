@@ -5,14 +5,14 @@ import 'package:root2route/screens/market_screen.dart';
 import 'package:root2route/screens/tradesman/history_screen.dart';
 import 'package:root2route/screens/selling_crop_screen.dart';
 
-class RestaurantHomeScreen extends StatefulWidget {
-  const RestaurantHomeScreen({super.key});
+class FactoryHomeScreen extends StatefulWidget {
+  const FactoryHomeScreen({super.key});
 
   @override
-  State<RestaurantHomeScreen> createState() => _RestaurantHomeScreenState();
+  State<FactoryHomeScreen> createState() => _FactoryHomeScreenState();
 }
 
-class _RestaurantHomeScreenState extends State<RestaurantHomeScreen> {
+class _FactoryHomeScreenState extends State<FactoryHomeScreen> {
   int index = 0;
 
   final screens = const [MarketScreen(), HistoryScreen(), AccountScreen()];

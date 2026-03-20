@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/account_screen.dart';
 import 'package:root2route/screens/market_screen.dart';
-import 'package:root2route/screens/merchant/history_screen.dart';
+import 'package:root2route/screens/tradesman/history_screen.dart';
 import 'package:root2route/screens/selling_crop_screen.dart';
 
-class MerchantHomeScreen extends StatefulWidget {
-  const MerchantHomeScreen({super.key});
+class TradesmanHomeScreen extends StatefulWidget {
+  const TradesmanHomeScreen({super.key});
 
   @override
-  State<MerchantHomeScreen> createState() => _MerchantHomeScreenState();
+  State<TradesmanHomeScreen> createState() => _TradesmanHomeScreenState();
 }
 
-class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
+class _TradesmanHomeScreenState extends State<TradesmanHomeScreen> {
   int index = 0;
 
   final screens = const [MarketScreen(), HistoryScreen(), AccountScreen()];
