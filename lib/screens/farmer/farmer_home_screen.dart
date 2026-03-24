@@ -8,6 +8,8 @@ import 'package:root2route/screens/farmer/scan_screen.dart';
 import 'package:root2route/screens/selling_crop_screen.dart';
 
 class FarmerHomeScreen extends StatefulWidget {
+    static const String id = '/farmerHomeScreen';
+
   const FarmerHomeScreen({super.key});
 
   @override

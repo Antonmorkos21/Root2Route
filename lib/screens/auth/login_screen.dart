@@ -11,7 +11,7 @@ import 'package:root2route/screens/auth/configuration_screen.dart';
 import 'package:root2route/screens/auth/forgot_password_screen.dart';
 import 'package:root2route/screens/auth/register_screen.dart';
 import 'package:root2route/screens/guest/guest_home_screen.dart';
- import 'package:root2route/services/api.dart';
+import 'package:root2route/services/api.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = '/loginScreen';
@@ -201,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   text: 'Login',
                                   onPressed: () async {
                                     if (formKey.currentState!.validate()) {
-                                       showDialog(
+                                      showDialog(
                                         context: context,
                                         barrierDismissible: false,
                                         builder:

@@ -3,6 +3,7 @@ import 'package:root2route/screens/auth/create_new_password.dart';
 import 'package:root2route/screens/auth/forgot_password_screen.dart';
 import 'package:root2route/screens/auth/register_screen.dart';
 import 'package:root2route/screens/auth/recovery_screen.dart';
+import 'package:root2route/screens/farmer/farmer_home_screen.dart';
 import 'package:root2route/screens/guest/guest_home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:root2route/screens/auth/login_screen.dart';

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:root2route/core/constants.dart';
@@ -124,7 +126,7 @@ class ApiService {
       );
       return {"success": true, "message": "Success"};
     } on DioException catch (e) {
-      debugPrint("🛑 Error Data: ${e.response?.data}");
+      debugPrint("Error Data: ${e.response?.data}");
       return {
         "success": false,
         "message": e.response?.data['message'] ?? "Invalid OTP",
@@ -134,8 +136,7 @@ class ApiService {
 
   Future<Map<String, dynamic>> forgetPassword(String email) async {
     try {
-      // طباعة للإيميل قبل ما يتبعت عشان تتأكد إنه نظيف
-      debugPrint("📧 Requesting OTP for: '${email.trim()}'");
+      debugPrint("Requesting OTP for: '${email.trim()}'");
 
       final response = await _dio.post(
         '/auth/forget-password',
@@ -156,21 +157,25 @@ class ApiService {
       // لو الرد نجح (Status 200/201)
       return {
         "success": true,
-        "message": response.data['message'] ?? "تم إرسال كود التحقق بنجاح",
+        "message":
+            response.data['message'] ?? "Verification code sent successfully",
       };
     } on DioException catch (e) {
       // هنا بنعرف السيرفر زعلان من إيه (مثلاً الإيميل مش موجود)
-      String errorMsg = "فشل إرسال الكود";
+      String errorMsg = "Code failed to be sent";
 
       if (e.response?.data is Map) {
         // لو السيرفر بعت رسالة زي "User not found"
         errorMsg = e.response?.data['message'] ?? errorMsg;
       }
 
-      debugPrint("🛑 Forget Password Server Error: ${e.response?.data}");
+      debugPrint("Forget Password Server Error: ${e.response?.data}");
       return {"success": false, "message": errorMsg};
     } catch (err) {
-      return {"success": false, "message": "حدث خطأ غير متوقع: $err"};
+      return {
+        "success": false,
+        "message": "An unexpected error occurred: $err",
+      };
     }
   }
 
@@ -197,19 +202,22 @@ class ApiService {
 
       return {
         "success": true,
-        "message": response.data['message'] ?? "تم تغيير كلمة المرور بنجاح",
+        "message": response.data['message'] ?? "Password changed successfully",
       };
     } on DioException catch (e) {
-      String errorMsg = "فشل تغيير كلمة المرور";
+      String errorMsg = "Password change failed";
 
       if (e.response?.data is Map) {
         errorMsg = e.response?.data['message'] ?? errorMsg;
       }
 
-      debugPrint("🛑 Reset Password Error: ${e.response?.data}");
+      debugPrint("Reset Password Error: ${e.response?.data}");
       return {"success": false, "message": errorMsg};
     } catch (err) {
-      return {"success": false, "message": "حدث خطأ غير متوقع: $err"};
+      return {
+        "success": false,
+        "message": "An unexpected error occurred: $err",
+      };
     }
   }
 
@@ -220,5 +228,46 @@ class ApiService {
     _tempToken = null;
 
     print("User logged out and token cleared.");
+  }
+
+  Future<Map<String, dynamic>?> analyzeCropImage(File imageFile) async {
+    try {
+      String fileName = imageFile.path.split('/').last;
+
+      FormData formData = FormData.fromMap({
+        "ImageFile": await MultipartFile.fromFile(
+          imageFile.path,
+          filename: fileName,
+          contentType: DioMediaType('image', 'jpeg'),
+        ),
+      });
+
+      final response = await _dio.post(
+        '/model-analysis/analyze',
+        data: formData,
+        options: Options(
+          // التعديل هنا: بنخلي Dio يقبل كود 400 وما يرميش Error
+          validateStatus: (status) => status! < 501,
+          headers: {
+            "X-Organization-Id": _defaultOrgId,
+            "accept": "*/*",
+            "Content-Type": "multipart/form-data",
+          },
+        ),
+      );
+
+      // بنرجع الداتا لو السيرفر رد بـ 200 أو 400
+      if (response.data is Map<String, dynamic>) {
+        return response.data;
+      }
+
+      return null;
+    } on DioException catch (e) {
+      debugPrint("AI SERVER ERROR: ${e.response?.data}");
+      return null;
+    } catch (e) {
+      debugPrint("Unexpected Error: $e");
+      return null;
+    }
   }
 }
