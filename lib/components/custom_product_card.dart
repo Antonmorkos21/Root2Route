@@ -32,7 +32,7 @@ class CustomProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 120,
+              height: 110,
               child: Stack(
                 children: [
                   ClipRRect(

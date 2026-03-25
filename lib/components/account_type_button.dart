@@ -25,14 +25,16 @@ class AccountTypeButton extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(AppSizes.paddingSize(context)),
         decoration: BoxDecoration(
-          color: selected
-              ? AppColors.primary.withOpacity(0.18)
-              : Colors.white.withOpacity(0.08),
+          color:
+              selected
+                  ? AppColors.primary.withOpacity(0.18)
+                  : const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: selected
-                ? AppColors.primary
-                : Colors.white.withOpacity(0.25),
+            color:
+                selected
+                    ? AppColors.primary
+                    : const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3),
             width: 1.5,
           ),
         ),
@@ -42,9 +44,10 @@ class AccountTypeButton extends StatelessWidget {
             Icon(
               icon,
               size: 26,
-              color: selected
-                  ? AppColors.primary
-                  : Colors.white.withOpacity(0.85),
+              color:
+                  selected
+                      ? AppColors.primary
+                      : const Color.fromARGB(255, 0, 0, 0),
             ),
             const SizedBox(height: 6),
             FittedBox(
@@ -54,9 +57,10 @@ class AccountTypeButton extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12.5,
                   fontWeight: FontWeight.w600,
-                  color: selected
-                      ? AppColors.primary
-                      : Colors.white.withOpacity(0.9),
+                  color:
+                      selected
+                          ? AppColors.primary
+                          : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
             ),
@@ -67,4 +71,4 @@ class AccountTypeButton extends StatelessWidget {
   }
 }
 
-enum AccountType { farmer, restaurant, factory,tradesman }
+enum AccountType { farmer, restaurant, factory, tradesman }

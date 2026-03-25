@@ -8,7 +8,6 @@ import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/auth/login_screen.dart';
 import 'package:root2route/screens/change_password_screen.dart';
-import 'package:root2route/screens/edit_info_screen.dart';
 import 'package:root2route/screens/notifications_screen.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -60,42 +59,6 @@ class _AccountScreenState extends State<AccountScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.primary, width: 4),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage("images/account.jpg"),
-                          backgroundColor: Color(0xFFEAEAEA),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 8,
-                      right: 8,
-                      child: CircleAvatar(
-                        radius: 16,
-                        backgroundColor: AppColors.primary,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.edit, size: 18, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 2),
-
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: Row(
@@ -107,24 +70,6 @@ class _AccountScreenState extends State<AccountScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: AppColors.textPrimary,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const EditInfoScreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Edit",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.primary,
-                        ),
                       ),
                     ),
                   ],

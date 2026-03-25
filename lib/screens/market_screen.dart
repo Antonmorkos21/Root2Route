@@ -96,7 +96,7 @@ class _MarketScreenState extends State<MarketScreen> {
           const SizedBox(height: 10),
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,

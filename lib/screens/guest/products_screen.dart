@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:root2route/core/responsive/app_sizes.dart';
 import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/models/details_product_model.dart';
- import 'package:root2route/screens/guest/organizations_screen.dart';
+import 'package:root2route/screens/Organizations/add_organization_screen.dart';
 import 'package:root2route/components/custom_product_card.dart';
- 
+
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
 
@@ -47,7 +47,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OrganizationsScreen(),
+                        builder: (context) => AddOrganizationScreen(),
                       ),
                     );
                   },

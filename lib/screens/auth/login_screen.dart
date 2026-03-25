@@ -237,8 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             .toString()
                                             .replaceAll('Exception: ', '');
 
-                                        // إذا كانت الرسالة تدل على أن الإيميل غير مفعل (تأكد من نص الرسالة من السيرفر)
-                                        if (errorMessage.toLowerCase().contains(
+                                         if (errorMessage.toLowerCase().contains(
                                               "confirm",
                                             ) ||
                                             errorMessage.toLowerCase().contains(
@@ -252,11 +251,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 'Please verify your email to continue.',
                                             confirmBtnText: 'Verify Now',
                                             onConfirmBtnTap: () async {
-                                              // 1. إغلاق الـ Alert الحالي
-                                              Navigator.pop(context);
+                                               Navigator.pop(context);
 
-                                              // 2. إظهار Loading بسيط عشان المستخدم يعرف إن الكود بيتبعت
-                                              showDialog(
+                                               showDialog(
                                                 context: context,
                                                 barrierDismissible: false,
                                                 builder:
@@ -267,18 +264,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                               );
 
                                               try {
-                                                // 3. استدعاء resend-otp يدوياً
-                                                await api.resendOTP(
+                                                 await api.resendOTP(
                                                   email: emailController.text,
                                                 );
 
                                                 if (context.mounted) {
                                                   Navigator.pop(
                                                     context,
-                                                  ); // إغلاق الـ Loading
+                                                  );  
 
-                                                  // 4. التوجيه لصفحة الـ OTP
-                                                  Navigator.push(
+                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder:
