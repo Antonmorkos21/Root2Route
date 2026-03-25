@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
-import 'package:root2route/screens/account_screen.dart';
+import 'package:root2route/screens/Organizations/ProfileScreen.dart';
+import 'package:root2route/screens/Organizations/add_organization_screen.dart';
 import 'package:root2route/screens/farmer/RequestProduct.dart';
 import 'package:root2route/screens/farmer/crops_screen.dart';
 import 'package:root2route/screens/market_screen.dart';
@@ -8,7 +9,7 @@ import 'package:root2route/screens/farmer/scan_screen.dart';
 import 'package:root2route/screens/selling_crop_screen.dart';
 
 class FarmerHomeScreen extends StatefulWidget {
-    static const String id = '/farmerHomeScreen';
+  static const String id = '/farmerHomeScreen';
 
   const FarmerHomeScreen({super.key});
 
@@ -23,7 +24,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
     CropsScreen(),
     ScanScreen(),
     MarketScreen(),
-    AccountScreen(),
+    ProfileScreen(),
   ];
 
   Widget? funFab() {
@@ -60,6 +61,18 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
               MaterialPageRoute(
                 builder: (context) => const SellingCropScreen(),
               ),
+            );
+          },
+        );
+      case 3:
+        return FloatingActionButton(
+          backgroundColor: AppColors.primary,
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add, color: AppColors.iconPrimary),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddOrganizationScreen()),
             );
           },
         );
@@ -145,7 +158,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                 NavigationDestination(
                   icon: Icon(Icons.person_outline),
                   selectedIcon: Icon(Icons.person),
-                  label: "Account",
+                  label: "Profile",
                 ),
               ],
             ),

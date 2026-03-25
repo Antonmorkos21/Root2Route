@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/core/theme/app_colors.dart';
-import 'package:root2route/screens/account_screen.dart';
+import 'package:root2route/screens/Organizations/ProfileScreen.dart';
+import 'package:root2route/screens/Organizations/add_organization_screen.dart';
 import 'package:root2route/screens/market_screen.dart';
 import 'package:root2route/screens/tradesman/history_screen.dart';
 import 'package:root2route/screens/selling_crop_screen.dart';
@@ -15,13 +16,49 @@ class RestaurantHomeScreen extends StatefulWidget {
 class _RestaurantHomeScreenState extends State<RestaurantHomeScreen> {
   int index = 0;
 
-  final screens = const [MarketScreen(), HistoryScreen(), AccountScreen()];
+  final screens = const [MarketScreen(), HistoryScreen(), ProfileScreen()];
+  Widget? funFab() {
+    switch (index) {
+      case 0:
+        return FloatingActionButton(
+          backgroundColor: AppColors.primary,
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add, color: AppColors.iconPrimary),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SellingCropScreen(),
+              ),
+            );
+          },
+        );
+
+      case 2:
+        return FloatingActionButton(
+          backgroundColor: AppColors.primary,
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add, color: AppColors.iconPrimary),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddOrganizationScreen()),
+            );
+          },
+        );
+
+      default:
+        return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       extendBody: true,
+      floatingActionButton: funFab(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
       body: screens[index],
       bottomNavigationBar: Container(
@@ -90,30 +127,13 @@ class _RestaurantHomeScreenState extends State<RestaurantHomeScreen> {
                 NavigationDestination(
                   icon: Icon(Icons.person_outline),
                   selectedIcon: Icon(Icons.person),
-                  label: "Account",
+                  label: "Profile",
                 ),
               ],
             ),
           ),
         ),
       ),
-
-      floatingActionButton:
-          index == 0
-              ? FloatingActionButton(
-                backgroundColor: AppColors.primary,
-                shape: const CircleBorder(),
-                child: const Icon(Icons.store, color: AppColors.iconPrimary),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SellingCropScreen(),
-                    ),
-                  );
-                },
-              )
-              : null,
     );
   }
 }
