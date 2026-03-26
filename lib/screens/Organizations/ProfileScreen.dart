@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:root2route/components/Organizations/organization_card.dart';
 import 'package:root2route/components/custom_button.dart';
+import 'package:root2route/core/theme/app_colors.dart';
 import 'package:root2route/screens/account_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -54,6 +55,7 @@ class ProfileScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 26),
                         child: CustomButton(
                           text: '  Edit Profile  ',
+                          color: AppColors.OrganizationColor,
                           onPressed: () {
                             Navigator.pushReplacement(
                               context,

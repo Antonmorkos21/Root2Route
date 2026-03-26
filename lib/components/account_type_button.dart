@@ -27,13 +27,13 @@ class AccountTypeButton extends StatelessWidget {
         decoration: BoxDecoration(
           color:
               selected
-                  ? AppColors.primary.withOpacity(0.18)
+                  ? AppColors.OrganizationColor.withOpacity(0.18)
                   : const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
             color:
                 selected
-                    ? AppColors.primary
+                    ? AppColors.OrganizationColor
                     : const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3),
             width: 1.5,
           ),
@@ -46,7 +46,7 @@ class AccountTypeButton extends StatelessWidget {
               size: 26,
               color:
                   selected
-                      ? AppColors.primary
+                      ? AppColors.OrganizationColor
                       : const Color.fromARGB(255, 0, 0, 0),
             ),
             const SizedBox(height: 6),
@@ -59,7 +59,7 @@ class AccountTypeButton extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color:
                       selected
-                          ? AppColors.primary
+                          ? AppColors.OrganizationColor
                           : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),

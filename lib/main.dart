@@ -4,19 +4,21 @@ import 'package:root2route/screens/auth/forgot_password_screen.dart';
 import 'package:root2route/screens/auth/register_screen.dart';
 import 'package:root2route/screens/auth/recovery_screen.dart';
 import 'package:root2route/screens/guest/guest_home_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:root2route/screens/auth/login_screen.dart';
 import 'package:root2route/screens/guest/products_screen.dart';
+import 'package:root2route/services/storage_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final prefs = await SharedPreferences.getInstance();
-  final String? token = prefs.getString('auth_token');
+  // تهيئة خدمة التخزين
+  await StorageService().init();
 
-  runApp(
-    MyApp(startScreen: token != null ? ProductsScreen.id : LoginScreen.id),
-  );
+  // التحقق من حالة تسجيل الدخول لتحديد الشاشة الافتتاحية
+  final isLoggedIn = StorageService().isLoggedIn;
+  final startScreen = isLoggedIn ? GuestHomeScreen.id : LoginScreen.id;
+
+  runApp(MyApp(startScreen: startScreen));
 }
 
 class MyApp extends StatelessWidget {

@@ -5,6 +5,8 @@ class CustomTextFormField extends StatefulWidget {
   final IconData icon;
   final String label;
   final Color? color;
+  final Color? borderColor;
+  final Color? cursorColor;
   final TextEditingController controller;
   final bool isPassword;
   final TextInputType? keyboardType;
@@ -22,7 +24,9 @@ class CustomTextFormField extends StatefulWidget {
     this.validator,
     this.isReadOnly = false,
     this.maxLines,
-      this.color,
+    this.color,
+    this.borderColor,
+    this.cursorColor,
   });
 
   @override
@@ -30,15 +34,15 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-     bool obscureText = true;
+  bool obscureText = true;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      style: TextStyle(    color: widget.color ?? Colors.white),
-       obscureText: widget.isPassword ? obscureText : false,
-      cursorColor: AppColors.primary,
+      style: TextStyle(color: widget.color ?? Colors.white),
+      obscureText: widget.isPassword ? obscureText : false,
+      cursorColor: widget.cursorColor ?? AppColors.primary,
       readOnly: widget.isReadOnly ?? false,
       maxLines: widget.maxLines ?? 1,
       keyboardType: widget.keyboardType,
@@ -59,7 +63,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             return const TextStyle(color: AppColors.colorError);
           }
           if (states.contains(MaterialState.focused)) {
-            return TextStyle(color: AppColors.primary);
+            return TextStyle(color: widget.borderColor ?? AppColors.primary);
           }
           return TextStyle(color: AppColors.textOnSecondary);
         }),
@@ -69,32 +73,34 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             return AppColors.colorError;
           }
           if (states.contains(MaterialState.focused)) {
-            return AppColors.primary;
+            return widget.borderColor ?? AppColors.primary;
           }
           return AppColors.iconSecondary;
         }),
-         suffixIcon: widget.isPassword
-           ? IconButton(
-                icon: Icon(
-                  obscureText
-                      ? Icons.visibility_off
-                      : Icons.visibility,
-                  color: AppColors.iconSecondary,
-                ),
-                onPressed: () {
-                  setState(() {
-                    obscureText = !obscureText;
-                  });
-                },
-              )
-            : null,
+        suffixIcon:
+            widget.isPassword
+                ? IconButton(
+                  icon: Icon(
+                    obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: AppColors.iconSecondary,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      obscureText = !obscureText;
+                    });
+                  },
+                )
+                : null,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: AppColors.Secondary),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.primary, width: 2),
+          borderSide: BorderSide(
+            color: widget.borderColor ?? AppColors.primary,
+            width: 2,
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -102,8 +108,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide:
-              const BorderSide(color: AppColors.colorError, width: 2),
+          borderSide: const BorderSide(color: AppColors.colorError, width: 2),
         ),
       ),
     );

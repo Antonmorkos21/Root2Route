@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:root2route/core/constants.dart';
 import 'package:root2route/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:root2route/services/storage_service.dart';
+import 'dart:convert'; // ✅ مهم جداً لاستخدام base64Url و utf8
 
 class ApiService {
   static final ApiService _instance = ApiService._internal();
@@ -12,12 +13,26 @@ class ApiService {
 
   final Dio _dio = Dio();
   final String _defaultOrgId = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
-  String? _tempToken;
+
   ApiService._internal() {
     _dio.options = BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
+    );
+
+    // إضافة الـ Interceptor لإضافة التوكن تلقائياً لكل الطلبات
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final token = StorageService().token;
+          if (token != null && token.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+          options.headers['X-Organization-Id'] = _defaultOrgId;
+          return handler.next(options);
+        },
+      ),
     );
 
     _dio.interceptors.add(
@@ -32,29 +47,21 @@ class ApiService {
   Future<void> registerUser(UserModel user) async {
     try {
       final response = await _dio.post('/auth/register', data: user.toJson());
-
-      if (response.data['data'] != null) {
-        _tempToken = response.data['data']['token'];
-        print("Register Success. Temp Token saved in memory.");
-      }
+      print("Register Success: ${response.data}");
     } on DioException catch (e) {
       if (e.response != null) {
         print("Server Error (${e.response?.statusCode}): ${e.response?.data}");
-
         dynamic data = e.response?.data;
         String message = "Something went wrong";
-
         if (data is Map) {
           message = data['message'] ?? data['msg'] ?? "Error occurred";
         } else if (data is String) {
           message = data;
         }
-
         throw Exception(message);
       } else {
         throw Exception("No Internet Connection");
       }
-      throw Exception(e.response?.data['message'] ?? "Registration failed");
     }
   }
 
@@ -69,32 +76,71 @@ class ApiService {
         },
       );
 
-      if (response.data['data'] != null) {
-        _tempToken = response.data['data']['token'];
+      // استخراج البيانات من الرد
+      final data = response.data['data'];
+      if (data != null) {
+        final accessToken = data['accessToken'];
+        final fullName = data['fullName'];
+        final expireAt = data['expireAt'];
+
+        // استخراج الـ userId من التوكن (أو من الرد إذا كان موجود)
+        // بما أن الـ userId موجود في التوكن، هنفكه ونستخرجه
+        final userId = _extractUserIdFromToken(accessToken);
+
+        // حفظ البيانات في الـ StorageService
+        await StorageService().saveAuthData(
+          token: accessToken,
+          userId: userId,
+          email: userName,
+          fullName: fullName ?? '',
+          expireAt: expireAt ?? '',
+        );
+
+        print("Login Success. Data saved to SharedPreferences.");
       }
     } on DioException catch (e) {
-      if (e.response?.data['data'] != null) {
-        _tempToken = e.response?.data['data']['token'];
-        print("Login partial success. Temp Token captured for OTP.");
-      }
       if (e.response != null) {
         print("Server Error (${e.response?.statusCode}): ${e.response?.data}");
-
         dynamic data = e.response?.data;
         String message = "Something went wrong";
-
         if (data is Map) {
           message = data['message'] ?? data['msg'] ?? "Error occurred";
         } else if (data is String) {
           message = data;
         }
-
         throw Exception(message);
       } else {
         throw Exception("No Internet Connection");
       }
+    }
+  }
 
-      throw Exception(e.response?.data['message'] ?? "Login failed");
+  // دالة لاستخراج الـ userId من التوكن (JWT)
+  String _extractUserIdFromToken(String token) {
+    try {
+      // فك التوكن (JWT)
+      final parts = token.split('.');
+      if (parts.length != 3) return '';
+
+      // فك الجزء الثاني (payload)
+      String payload = parts[1];
+      // إضافة padding إذا لزم الأمر
+      while (payload.length % 4 != 0) {
+        payload += '=';
+      }
+
+      final decodedBytes = Uri.decodeComponent(payload);
+      final jsonString = utf8.decode(base64Url.decode(decodedBytes));
+      final Map<String, dynamic> jsonData = json.decode(jsonString);
+
+      // البحث عن الـ userId في التوكن
+      // حسب الـ claims اللي عندك، الـ userId موجود في 'sub' أو 'nameidentifier'
+      return jsonData['sub'] ??
+          jsonData['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] ??
+          '';
+    } catch (e) {
+      print("Error extracting userId from token: $e");
+      return '';
     }
   }
 
@@ -113,10 +159,7 @@ class ApiService {
     try {
       final response = await _dio.post(
         '/auth/verify-otp',
-        data: {
-          "email": email.trim(),
-          "otp": otpCode.trim(), // جرب تبعته String زي الـ Schema بالظبط
-        },
+        data: {"email": email.trim(), "otp": otpCode.trim()},
         options: Options(
           headers: {
             "Content-Type": "application/json",
@@ -126,7 +169,7 @@ class ApiService {
       );
       return {"success": true, "message": "Success"};
     } on DioException catch (e) {
-      debugPrint("Error Data: ${e.response?.data}");
+      debugPrint("🛑 Error Data: ${e.response?.data}");
       return {
         "success": false,
         "message": e.response?.data['message'] ?? "Invalid OTP",
@@ -136,46 +179,30 @@ class ApiService {
 
   Future<Map<String, dynamic>> forgetPassword(String email) async {
     try {
-      debugPrint("Requesting OTP for: '${email.trim()}'");
-
+      debugPrint("📧 Requesting OTP for: '${email.trim()}'");
       final response = await _dio.post(
         '/auth/forget-password',
-        data: {
-          "email":
-              email
-                  .trim()
-                  .toLowerCase(), // تأكدنا إن الـ lowercase بيفرق مع السيرفرات
-        },
+        data: {"email": email.trim().toLowerCase()},
         options: Options(
           headers: {
-            "X-Organization-Id": _defaultOrgId, // الـ ID اللي ثبتناه
+            "X-Organization-Id": _defaultOrgId,
             "Content-Type": "application/json",
           },
         ),
       );
-
-      // لو الرد نجح (Status 200/201)
       return {
         "success": true,
-        "message":
-            response.data['message'] ?? "Verification code sent successfully",
+        "message": response.data['message'] ?? "تم إرسال كود التحقق بنجاح",
       };
     } on DioException catch (e) {
-      // هنا بنعرف السيرفر زعلان من إيه (مثلاً الإيميل مش موجود)
-      String errorMsg = "Code failed to be sent";
-
+      String errorMsg = "فشل إرسال الكود";
       if (e.response?.data is Map) {
-        // لو السيرفر بعت رسالة زي "User not found"
         errorMsg = e.response?.data['message'] ?? errorMsg;
       }
-
-      debugPrint("Forget Password Server Error: ${e.response?.data}");
+      debugPrint("🛑 Forget Password Server Error: ${e.response?.data}");
       return {"success": false, "message": errorMsg};
     } catch (err) {
-      return {
-        "success": false,
-        "message": "An unexpected error occurred: $err",
-      };
+      return {"success": false, "message": "حدث خطأ غير متوقع: $err"};
     }
   }
 
@@ -199,35 +226,20 @@ class ApiService {
           },
         ),
       );
-
       return {
         "success": true,
-        "message": response.data['message'] ?? "Password changed successfully",
+        "message": response.data['message'] ?? "تم تغيير كلمة المرور بنجاح",
       };
     } on DioException catch (e) {
-      String errorMsg = "Password change failed";
-
+      String errorMsg = "فشل تغيير كلمة المرور";
       if (e.response?.data is Map) {
         errorMsg = e.response?.data['message'] ?? errorMsg;
       }
-
-      debugPrint("Reset Password Error: ${e.response?.data}");
+      debugPrint("🛑 Reset Password Error: ${e.response?.data}");
       return {"success": false, "message": errorMsg};
     } catch (err) {
-      return {
-        "success": false,
-        "message": "An unexpected error occurred: $err",
-      };
+      return {"success": false, "message": "حدث خطأ غير متوقع: $err"};
     }
-  }
-
-  Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('auth_token');
-
-    _tempToken = null;
-
-    print("User logged out and token cleared.");
   }
 
   Future<Map<String, dynamic>?> analyzeCropImage(File imageFile) async {
@@ -269,5 +281,99 @@ class ApiService {
       debugPrint("Unexpected Error: $e");
       return null;
     }
+  }
+  //   Future<void> logout() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.remove('auth_token');
+
+  //   _tempToken = null;
+
+  //   print("User logged out and token cleared.");
+  // }
+
+  //creat organization
+  Future<Map<String, dynamic>> createOrganization({
+    required String name,
+    required String description,
+    required String address,
+    required String contactEmail,
+    required String contactPhone,
+    required int type,
+    File? logo,
+  }) async {
+    try {
+      // جلب الـ ownerId من التخزين (المستخدم اللي عامل login)
+      final ownerId = StorageService().userId;
+
+      if (ownerId == null || ownerId.isEmpty) {
+        throw Exception("User not logged in");
+      }
+
+      print("📦 Creating organization with ownerId: $ownerId");
+
+      // إنشاء FormData
+      final formData = FormData.fromMap({
+        'OwnerId': ownerId,
+        'Name': name,
+        'Description': description,
+        'Address': address,
+        'ContactEmail': contactEmail,
+        'ContactPhone': contactPhone,
+        'Type': type,
+        if (logo != null)
+          'Logo': await MultipartFile.fromFile(
+            logo.path,
+            filename: 'logo_${DateTime.now().millisecondsSinceEpoch}.png',
+          ),
+      });
+
+      final response = await _dio.post(
+        '/organizations',
+        data: formData,
+        options: Options(headers: {'Content-Type': 'multipart/form-data'}),
+      );
+
+      print("✅ Organization created successfully: ${response.data}");
+
+      return {
+        "success": true,
+        "data": response.data,
+        "message": "تم إنشاء المنظمة بنجاح",
+      };
+    } on DioException catch (e) {
+      print("❌ Error creating organization: ${e.response?.data}");
+
+      String errorMsg = "فشل إنشاء المنظمة";
+      if (e.response?.data is Map) {
+        errorMsg = e.response?.data['message'] ?? errorMsg;
+      } else if (e.response?.data is String) {
+        errorMsg = e.response?.data;
+      }
+
+      return {"success": false, "message": errorMsg};
+    } catch (e) {
+      print("❌ Unexpected error: $e");
+      return {"success": false, "message": "حدث خطأ غير متوقع: $e"};
+    }
+  }
+
+  // الحصول على التوكن المخزن
+  String? getToken() {
+    return StorageService().token;
+  }
+
+  // الحصول على معرف المستخدم (owner id)
+  String? getUserId() {
+    return StorageService().userId;
+  }
+
+  // التحقق من حالة تسجيل الدخول
+  bool isLoggedIn() {
+    return StorageService().isLoggedIn;
+  }
+
+  Future<void> logout() async {
+    await StorageService().logout();
+    print("User logged out and token cleared.");
   }
 }

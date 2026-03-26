@@ -12,6 +12,7 @@ import 'package:root2route/screens/factory/factory_home_screen.dart';
 import 'package:root2route/screens/farmer/farmer_home_screen.dart';
 import 'package:root2route/screens/tradesman/tradesman_home_screen.dart';
 import 'package:root2route/screens/restaurant/restaurant_home_screen.dart';
+import 'package:root2route/services/api.dart';
 
 class AddOrganizationScreen extends StatefulWidget {
   const AddOrganizationScreen({super.key});
@@ -32,13 +33,132 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
 
   File? _image;
   final ImagePicker _picker = ImagePicker();
+  final ApiService _api = ApiService();
+  bool _isLoading = false;
 
   Future<void> _pickImage() async {
+    // منع اختيار صورة أثناء التحميل
+    if (_isLoading) return;
+
     final XFile? pickedFile = await _picker.pickImage(
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
       setState(() => _image = File(pickedFile.path));
+    }
+  }
+
+  // تحويل نوع الحساب إلى رقم
+  int _getOrganizationTypeValue(AccountType type) {
+    switch (type) {
+      case AccountType.farmer:
+        return 0;
+      case AccountType.restaurant:
+        return 1;
+      case AccountType.factory:
+        return 2;
+      case AccountType.tradesman:
+        return 3;
+    }
+  }
+
+  // الحصول على الشاشة المناسبة
+  Widget _getTargetScreen(AccountType type) {
+    switch (type) {
+      case AccountType.farmer:
+        return const FarmerHomeScreen();
+      case AccountType.restaurant:
+        return const RestaurantHomeScreen();
+      case AccountType.factory:
+        return const FactoryHomeScreen();
+      case AccountType.tradesman:
+        return const TradesmanHomeScreen();
+    }
+  }
+
+  // دالة إنشاء المنظمة
+  Future<void> _createOrganization() async {
+    // التحقق من صحة النموذج
+    if (!formKey.currentState!.validate()) return;
+
+    // التحقق من اختيار نوع الحساب
+    if (selectedType == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select an account type'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    // بدء التحميل
+    setState(() => _isLoading = true);
+
+    // إظهار مؤشر تحميل
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder:
+          (context) => const Center(
+            child: CircularProgressIndicator(color: Colors.white),
+          ),
+    );
+
+    try {
+      // استدعاء API
+      final result = await _api.createOrganization(
+        name: nameController.text.trim(),
+        description: descriptionController.text.trim(),
+        address: addressController.text.trim(),
+        contactEmail: emailController.text.trim(),
+        contactPhone: phoneController.text.trim(),
+        type: _getOrganizationTypeValue(selectedType!),
+        logo: _image,
+      );
+
+      // إغلاق مؤشر التحميل
+      if (context.mounted) Navigator.pop(context);
+
+      if (result['success']) {
+        // نجاح
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          title: 'Success!',
+          text: result['message'],
+          confirmBtnText: 'Continue',
+          onConfirmBtnTap: () {
+            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => _getTargetScreen(selectedType!),
+              ),
+            );
+          },
+        );
+      } else {
+        // فشل
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Error',
+          text: result['message'],
+          confirmBtnText: 'Try Again',
+        );
+      }
+    } catch (e) {
+      if (context.mounted) Navigator.pop(context);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.error,
+        title: 'Error',
+        text: 'حدث خطأ: $e',
+        confirmBtnText: 'OK',
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -48,10 +168,17 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(0, 255, 255, 255),
         elevation: 0,
-        title: const Text('Create Organization'),
+        title: const Text(
+          'Create Organization',
+          style: TextStyle(color: Colors.black),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Icon(
               Icons.business_outlined,
               size: 30,
@@ -184,7 +311,7 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
                                     ? Icon(
                                       Icons.add_a_photo_outlined,
                                       size: 30,
-                                      color: AppColors.primary,
+                                      color: AppColors.OrganizationColor,
                                     )
                                     : null,
                           ),
@@ -211,6 +338,9 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
                 const SizedBox(height: 20),
                 CustomTextFormField(
                   icon: Icons.business_outlined,
+                  color: Colors.black,
+                  cursorColor: AppColors.OrganizationColor,
+                  borderColor: AppColors.OrganizationColor,
                   label: 'Company Name',
                   controller: nameController,
                   validator: (value) {
@@ -223,6 +353,9 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
                 const SizedBox(height: 12),
                 CustomTextFormField(
                   icon: Icons.email,
+                  color: Colors.black,
+                  cursorColor: AppColors.OrganizationColor,
+                  borderColor: AppColors.OrganizationColor,
                   label: 'Email',
                   controller: emailController,
                   validator: (value) {
@@ -235,9 +368,13 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
                 const SizedBox(height: 12),
                 CustomTextFormField(
                   icon: Icons.phone_outlined,
+                  color: Colors.black,
+                  cursorColor: AppColors.OrganizationColor,
+                  borderColor: AppColors.OrganizationColor,
                   label: 'Phone Number',
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
+
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your phone';
@@ -251,8 +388,12 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
                 const SizedBox(height: 12),
                 CustomTextFormField(
                   icon: Icons.location_on_outlined,
+                  cursorColor: AppColors.OrganizationColor,
+                  borderColor: AppColors.OrganizationColor,
                   label: 'Address',
                   controller: addressController,
+                  color: Colors.black,
+
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter address';
@@ -335,8 +476,12 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
 
                 CustomTextFormField(
                   icon: Icons.description_outlined,
+                  cursorColor: AppColors.OrganizationColor,
+                  borderColor: AppColors.OrganizationColor,
                   label: 'Description',
                   controller: descriptionController,
+                  color: Colors.black,
+
                   maxLines: 3,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -349,54 +494,13 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
                 const SizedBox(height: 30),
 
                 CustomButton(
-                  text: 'Create Company',
-                  onPressed: () {
-                    if (!formKey.currentState!.validate()) return;
-
-                    if (selectedType == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Please select an account type'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                      return;
-                    }
-
-                    Widget target;
-
-                    switch (selectedType!) {
-                      case AccountType.farmer:
-                        target = const FarmerHomeScreen();
-                        break;
-
-                      case AccountType.restaurant:
-                        target = const RestaurantHomeScreen();
-                        break;
-
-                      case AccountType.factory:
-                        target = const FactoryHomeScreen();
-                        break;
-                      case AccountType.tradesman:
-                        target = const TradesmanHomeScreen();
-                        break;
-                    }
-
-                    QuickAlert.show(
-                      context: context,
-                      type: QuickAlertType.success,
-                      text: "Company created successfully!",
-                      showConfirmBtn: false,
-                    );
-
-                    Future.delayed(const Duration(seconds: 3), () {
-                      if (!context.mounted) return;
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => target),
-                      );
-                    });
-                  },
+                  text: _isLoading ? 'Creating...' : 'Create Company',
+                  onPressed:
+                      _isLoading
+                          ? () {} // ✅ دالة فارغة بدل null
+                          : () {
+                            _createOrganization();
+                          },
                 ),
               ],
             ),

@@ -55,204 +55,203 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Personal information",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textPrimary,
-                      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 50),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Personal information",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textPrimary,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
 
-              InfoAccountCard(
-                icon: Icons.badge_outlined,
-                title: 'Name',
-                info: 'Anton Morkos',
-              ),
-              InfoAccountCard(
-                icon: Icons.email,
-                title: 'Email',
-                info: 'Antonmorkos6@gamil.com',
-              ),
-              InfoAccountCard(
-                icon: Icons.account_circle_outlined,
-                title: 'Account type',
-                info: 'Farmer',
-              ),
+            InfoAccountCard(
+              icon: Icons.badge_outlined,
+              title: 'Name',
+              info: 'Anton Morkos',
+            ),
+            InfoAccountCard(
+              icon: Icons.email,
+              title: 'Email',
+              info: 'Antonmorkos6@gamil.com',
+            ),
+            InfoAccountCard(
+              icon: Icons.account_circle_outlined,
+              title: 'Account type',
+              info: 'Farmer',
+            ),
 
-              const SizedBox(height: 2),
+            const SizedBox(height: 2),
 
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
 
-                child: Row(
-                  children: [
-                    Text(
-                      "Settings and security",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textPrimary,
-                      ),
+              child: Row(
+                children: [
+                  Text(
+                    "Settings and security",
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textPrimary,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
 
-              SettingsAccountCard(
-                icon: Icons.lock_outline,
-                title: 'Change Password',
-                value: '',
-                iconButton: Icons.arrow_forward_ios,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const ChangePasswordScreen(),
-                    ),
-                  );
-                },
-              ),
-              SettingsAccountCard(
-                icon: Icons.public,
-                title: ' Language settings',
+            SettingsAccountCard(
+              icon: Icons.lock_outline,
+              title: 'Change Password',
+              value: '',
+              iconButton: Icons.arrow_forward_ios,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ChangePasswordScreen(),
+                  ),
+                );
+              },
+            ),
+            SettingsAccountCard(
+              icon: Icons.public,
+              title: ' Language settings',
 
-                value: 'English',
+              value: 'English',
 
-                iconButton: Icons.arrow_forward_ios,
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (_) => AlertDialog(
-                          title: const Text("Change Language"),
+              iconButton: Icons.arrow_forward_ios,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder:
+                      (_) => AlertDialog(
+                        title: const Text("Change Language"),
 
-                          content: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListTile(
-                                  title: const Text("English"),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                ListTile(
-                                  title: const Text("العربية"),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                  );
-                },
-              ),
-
-              SettingsAccountCard(
-                icon: Icons.delete,
-                title: 'DeleteAccount',
-                value: '',
-                iconButton: Icons.arrow_forward_ios,
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (_) => AlertDialog(
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
+                        content: Container(
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18),
                           ),
-                          title: const Text(
-                            'Delete account?',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ListTile(
+                                title: const Text("English"),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              ListTile(
+                                title: const Text("العربية"),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
                           ),
-                          content: const Text(
-                            'This action is permanent. Your account and data will be deleted.',
-                          ),
-                          actionsPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 25,
-                          ),
-                          actions: [
-                            Row(
-                              children: [
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: CustomButton(
-                                    text: 'Ok',
-                                    color: Colors.red,
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      QuickAlert.show(
-                                        context: context,
-                                        type: QuickAlertType.success,
-                                        text: "The account has been deleted",
-                                        showConfirmBtn: false,
-                                      );
-
-                                      Future.delayed(
-                                        const Duration(seconds: 3),
-                                        () {
-                                          if (!context.mounted) return;
-                                          Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            LoginScreen.id,
-                                            (route) => false,
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 20),
-                                Expanded(
-                                  child: CustomButton(
-                                    text: 'Cancel',
-                                    color: AppColors.iconSecondary,
-                                    onPressed: () => Navigator.pop(context),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
                         ),
+                      ),
+                );
+              },
+            ),
+
+            SettingsAccountCard(
+              icon: Icons.delete,
+              title: 'DeleteAccount',
+              value: '',
+              iconButton: Icons.arrow_forward_ios,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder:
+                      (_) => AlertDialog(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        title: const Text(
+                          'Delete account?',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        content: const Text(
+                          'This action is permanent. Your account and data will be deleted.',
+                        ),
+                        actionsPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 25,
+                        ),
+                        actions: [
+                          Row(
+                            children: [
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: CustomButton(
+                                  text: 'Ok',
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    QuickAlert.show(
+                                      context: context,
+                                      type: QuickAlertType.success,
+                                      text: "The account has been deleted",
+                                      showConfirmBtn: false,
+                                    );
+
+                                    Future.delayed(
+                                      const Duration(seconds: 3),
+                                      () {
+                                        if (!context.mounted) return;
+                                        Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          LoginScreen.id,
+                                          (route) => false,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 20),
+                              Expanded(
+                                child: CustomButton(
+                                  text: 'Cancel',
+                                  color: AppColors.iconSecondary,
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                );
+              },
+            ),
+            const SizedBox(height: 2),
+            Padding(
+              padding: EdgeInsets.all(AppSizes.paddingSize(context)),
+
+              child: CustomButton(
+                text: 'Logout',
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
+                color: Colors.red,
               ),
-              const SizedBox(height: 2),
-              Padding(
-                padding: EdgeInsets.all(AppSizes.paddingSize(context)),
-
-                child: CustomButton(
-                  text: 'Logout',
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
-                  },
-                  color: Colors.red,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
