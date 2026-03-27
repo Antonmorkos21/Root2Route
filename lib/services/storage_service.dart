@@ -11,6 +11,7 @@ class StorageService {
   static const String _keyUserFullName = 'user_full_name';
   static const String _keyIsLoggedIn = 'is_logged_in';
   static const String _keyTokenExpiry = 'token_expiry';
+  static const String _keyIsVerified = 'is_verified'; // ✅ جديد
 
   late SharedPreferences _prefs;
 
@@ -18,7 +19,6 @@ class StorageService {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  // حفظ بيانات المصادقة بعد تسجيل الدخول الناجح
   Future<void> saveAuthData({
     required String token,
     required String userId,
@@ -34,25 +34,21 @@ class StorageService {
     await _prefs.setString(_keyTokenExpiry, expireAt);
   }
 
-  // الحصول على التوكن
+  // ✅ حفظ حالة التحقق
+  Future<void> saveIsVerified(bool value) async {
+    await _prefs.setBool(_keyIsVerified, value);
+  }
+
   String? get token => _prefs.getString(_keyToken);
-
-  // الحصول على معرف المستخدم (owner id)
   String? get userId => _prefs.getString(_keyUserId);
-
-  // الحصول على الإيميل
   String? get userEmail => _prefs.getString(_keyUserEmail);
-
-  // الحصول على الاسم الكامل
   String? get userFullName => _prefs.getString(_keyUserFullName);
-
-  // التحقق من حالة تسجيل الدخول
   bool get isLoggedIn => _prefs.getBool(_keyIsLoggedIn) ?? false;
-
-  // الحصول على تاريخ انتهاء التوكن
   String? get tokenExpiry => _prefs.getString(_keyTokenExpiry);
 
-  // تسجيل الخروج - مسح كل البيانات
+  // ✅ قراءة حالة التحقق
+  bool get isVerified => _prefs.getBool(_keyIsVerified) ?? false;
+
   Future<void> logout() async {
     await _prefs.remove(_keyToken);
     await _prefs.remove(_keyUserId);
@@ -60,9 +56,9 @@ class StorageService {
     await _prefs.remove(_keyUserFullName);
     await _prefs.remove(_keyIsLoggedIn);
     await _prefs.remove(_keyTokenExpiry);
+    await _prefs.remove(_keyIsVerified); // ✅ إضافة
   }
 
-  // التحقق من صلاحية التوكن (اختياري)
   bool get isTokenValid {
     final expiry = tokenExpiry;
     if (expiry == null) return false;

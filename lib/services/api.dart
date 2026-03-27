@@ -76,18 +76,17 @@ class ApiService {
         },
       );
 
-      // استخراج البيانات من الرد
       final data = response.data['data'];
       if (data != null) {
         final accessToken = data['accessToken'];
         final fullName = data['fullName'];
         final expireAt = data['expireAt'];
 
-        // استخراج الـ userId من التوكن (أو من الرد إذا كان موجود)
-        // بما أن الـ userId موجود في التوكن، هنفكه ونستخرجه
         final userId = _extractUserIdFromToken(accessToken);
 
-        // حفظ البيانات في الـ StorageService
+        // ✅ محاولة استخراج حالة التحقق من الرد (لو موجودة)
+        final isVerified = data['user']?['isVerified'] ?? true;
+
         await StorageService().saveAuthData(
           token: accessToken,
           userId: userId,
@@ -95,6 +94,9 @@ class ApiService {
           fullName: fullName ?? '',
           expireAt: expireAt ?? '',
         );
+
+        // ✅ حفظ حالة التحقق
+        await StorageService().saveIsVerified(isVerified);
 
         print("Login Success. Data saved to SharedPreferences.");
       }
@@ -282,17 +284,9 @@ class ApiService {
       return null;
     }
   }
-  //   Future<void> logout() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.remove('auth_token');
+  
 
-  //   _tempToken = null;
-
-  //   print("User logged out and token cleared.");
-  // }
-
-  //creat organization
-  Future<Map<String, dynamic>> createOrganization({
+   Future<Map<String, dynamic>> createOrganization({
     required String name,
     required String description,
     required String address,

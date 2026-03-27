@@ -77,11 +77,11 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
   }
 
   // دالة إنشاء المنظمة
+  // دالة إنشاء المنظمة
   Future<void> _createOrganization() async {
-    // التحقق من صحة النموذج
+    // 1. التحقق من صحة النموذج ونوع الحساب
     if (!formKey.currentState!.validate()) return;
 
-    // التحقق من اختيار نوع الحساب
     if (selectedType == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -92,21 +92,25 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
       return;
     }
 
-    // بدء التحميل
+    // 2. بدء التحميل وإظهار QuickAlert التحميل
     setState(() => _isLoading = true);
 
-    // إظهار مؤشر تحميل
-    showDialog(
+    QuickAlert.show(
       context: context,
+      type: QuickAlertType.loading,
+      title: 'Loading',
+      text: 'Creating your organization...',
       barrierDismissible: false,
-      builder:
-          (context) => const Center(
-            child: CircularProgressIndicator(color: Colors.white),
-          ),
     );
 
+    // 3. محاكاة وقت الانتظار (3 ثوانٍ)
+    await Future.delayed(const Duration(seconds: 3));
+
+    // 4. إغلاق تنبيه التحميل قبل استدعاء الـ API أو عرض النتيجة
+    if (mounted) Navigator.pop(context);
+
     try {
-      // استدعاء API
+      // 5. استدعاء API الفعلي
       final result = await _api.createOrganization(
         name: nameController.text.trim(),
         description: descriptionController.text.trim(),
@@ -117,19 +121,18 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
         logo: _image,
       );
 
-      // إغلاق مؤشر التحميل
-      if (context.mounted) Navigator.pop(context);
+      if (!mounted) return;
 
       if (result['success']) {
-        // نجاح
+        // نجاح العملية
         QuickAlert.show(
           context: context,
           type: QuickAlertType.success,
           title: 'Success!',
-          text: result['message'],
+          text: 'Organization created successfully!',
           confirmBtnText: 'Continue',
           onConfirmBtnTap: () {
-            Navigator.pop(context);
+            Navigator.pop(context); // إغلاق الـ Alert
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -139,25 +142,27 @@ class _AddOrganizationScreenState extends State<AddOrganizationScreen> {
           },
         );
       } else {
-        // فشل
+        // فشل العملية (خطأ من السيرفر)
         QuickAlert.show(
           context: context,
           type: QuickAlertType.error,
           title: 'Error',
-          text: result['message'],
+          text: result['message'] ?? 'Failed to create organization',
           confirmBtnText: 'Try Again',
         );
       }
     } catch (e) {
-      if (context.mounted) Navigator.pop(context);
+      // خطأ غير متوقع
+      if (!mounted) return;
       QuickAlert.show(
         context: context,
         type: QuickAlertType.error,
         title: 'Error',
-        text: 'حدث خطأ: $e',
+        text: 'An unexpected error occurred: $e',
         confirmBtnText: 'OK',
       );
     } finally {
+      // إنهاء حالة التحميل
       if (mounted) setState(() => _isLoading = false);
     }
   }
